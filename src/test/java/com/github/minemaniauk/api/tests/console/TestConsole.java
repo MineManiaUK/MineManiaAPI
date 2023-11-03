@@ -18,15 +18,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-/**
- * Classes used for testing code in java junit tests.
- * A quicker way of testing using junit.
- *
- * <ul>
- *     <li>
- *         To check a result you can use a new instance of a
- *         {@link com.github.minemaniauk.api.testing.ResultChecker}.
- *     </li>
- * </ul>
- */
-package com.github.minemaniauk.api.testing;
+package com.github.minemaniauk.api.tests.console;
+
+import com.github.minemaniauk.api.console.ConsoleColor;
+import com.github.minemaniauk.api.testing.ResultChecker;
+import org.junit.jupiter.api.Test;
+
+public class TestConsole {
+
+    @Test
+    public void testConsoleColors() {
+        ResultChecker resultChecker = new ResultChecker();
+
+        // Loop though all the colors.
+        for (ConsoleColor color : ConsoleColor.values()) {
+            resultChecker.expect(
+                    color.getCode() + "test",
+                    ConsoleColor.parse(color.getPattern() + "test")
+            );
+        }
+    }
+}

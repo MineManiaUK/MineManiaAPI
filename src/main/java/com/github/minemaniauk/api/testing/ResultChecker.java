@@ -20,5 +20,116 @@
 
 package com.github.minemaniauk.api.testing;
 
+import com.github.minemaniauk.api.console.Console;
+import org.jetbrains.annotations.NotNull;
+import org.junit.jupiter.api.Assertions;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Represents a result checker.
+ * Create a new instance of this class to
+ * compare results.
+ */
 public class ResultChecker {
+
+    private final List<Runnable> fallBackRunnableList = new ArrayList<>();
+
+    /**
+     * Used to check if a boolean value is true.
+     * If false, the test will fail.
+     *
+     * @param condition The boolean value.
+     * @return This instance.
+     */
+    public @NotNull ResultChecker expect(boolean condition) {
+        if (condition) {
+            Console.log("&aPassed");
+            return this;
+        }
+
+        this.runFallBack();
+        Assertions.assertTrue(condition);
+        return this;
+    }
+
+    /**
+     * Used to check if two values are the same.
+     * If they are not equal the test will fail.
+     *
+     * @param value1 The first value.
+     * @param value2 The second value.
+     * @return This instance.
+     */
+    public @NotNull ResultChecker expect(Object value1, Object value2) {
+        if (value1.equals(value2)) {
+            Console.log("&aPassed");
+            Console.log("&7Value 1 &r: &e" + value1);
+            Console.log("&7Value 2 &r: &e" + value2);
+            return this;
+        }
+
+        this.runFallBack();
+        Assertions.assertEquals(value1, value2);
+        return this;
+    }
+
+    /**
+     * Used to add a runnable that will be
+     * executed before an error occurs.
+     *
+     * @param runnable The instance of the runnable.
+     * @return This instance.
+     */
+    public @NotNull ResultChecker fallBack(@NotNull Runnable runnable) {
+        this.fallBackRunnableList.add(runnable);
+        return this;
+    }
+
+    /**
+     * Used to add a warning message that will
+     * be sent to console before an error occurs.
+     *
+     * @param message The instance of the message.
+     * @return This instance.
+     */
+    public @NotNull ResultChecker fallBack(@NotNull String message) {
+        return this.fallBack(() -> Console.warn(message));
+    }
+
+    /**
+     * Used to run the fallback lists.
+     * This method should be called before an error occurs.
+     *
+     * @return This instance.
+     */
+    private @NotNull ResultChecker runFallBack() {
+        for (Runnable runnable : this.fallBackRunnableList) {
+            runnable.run();
+        }
+        return this;
+    }
+
+    /**
+     * Used to run a runnable.
+     *
+     * @param runnable The instance of a runnable.
+     * @return This instance.
+     */
+    public @NotNull ResultChecker then(@NotNull Runnable runnable) {
+        runnable.run();
+        return this;
+    }
+
+    /**
+     * Used to log a message in console.
+     *
+     * @param message The instance of a message.
+     * @return This instance.
+     */
+    public @NotNull ResultChecker then(@NotNull String message) {
+        Console.log(message);
+        return this;
+    }
 }
