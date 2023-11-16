@@ -45,6 +45,13 @@
             <artifactId>DeveloperTools</artifactId>
             <version>1.1.0</version>
         </dependency>
+
+        <!-- Kerb -->
+        <dependency>
+            <groupId>com.github.Kerbity</groupId>
+            <artifactId>Kerb</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>
