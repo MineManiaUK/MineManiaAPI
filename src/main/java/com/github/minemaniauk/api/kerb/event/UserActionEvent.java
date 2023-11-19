@@ -18,36 +18,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.minemaniauk.api;
+package com.github.minemaniauk.api.kerb.event;
 
+import com.github.minemaniauk.api.user.MineManiaUser;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.UUID;
-
 /**
- * Represents a mine mania user on the server.
+ * Represents a user action event.
  */
-public interface MineManiaUser {
+public interface UserActionEvent {
 
-    @NotNull UUID getUniqueId();
-
-    @NotNull String getName();
-
-    default @NotNull UserActionSet getActions() {
-        return new UserActionSet(this);
-    }
-    
-    static @NotNull MineManiaUser of(@NotNull UUID uuid, @NotNull String name) {
-        return new MineManiaUser() {
-            @Override
-            public @NotNull UUID getUniqueId() {
-                return uuid;
-            }
-
-            @Override
-            public @NotNull String getName() {
-                return name;
-            }
-        };
-    }
+    /**
+     * Used to get the instance of the user.
+     *
+     * @return The instance of the user.
+     */
+    @NotNull MineManiaUser getUser();
 }

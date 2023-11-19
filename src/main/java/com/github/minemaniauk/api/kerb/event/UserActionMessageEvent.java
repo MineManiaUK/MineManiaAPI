@@ -20,23 +20,44 @@
 
 package com.github.minemaniauk.api.kerb.event;
 
-import com.github.kerbity.kerb.event.Event;
-import com.github.minemaniauk.api.MineManiaUser;
+import com.github.kerbity.kerb.event.CompletableEvent;
+import com.github.minemaniauk.api.user.MineManiaUser;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class ServerMailEvent implements Event {
+/**
+ * Represents a user action completable event.
+ * This is used to send a message to a player
+ * not knowing what server they are on.
+ */
+public class UserActionMessageEvent extends CompletableEvent implements UserActionEvent {
 
     private final @NotNull MineManiaUser user;
     private final @NotNull String message;
 
-    public ServerMailEvent(@NotNull MineManiaUser user, @NotNull String message) {
+    /**
+     * Used to create the event with the
+     * instance of a single string.
+     *
+     * @param user    The instance of the user.
+     * @param message The instance of the message.
+     */
+    public UserActionMessageEvent(@NotNull MineManiaUser user, @NotNull String message) {
         this.user = user;
         this.message = message;
     }
 
-    public ServerMailEvent(@NotNull MineManiaUser user, @NotNull List<String> message) {
+    /**
+     * Used to create the event with the
+     * instance of a list of strings.
+     * The list of strings will be combined and
+     * seperated by a new line character.
+     *
+     * @param user    The instance of the user.
+     * @param message The instance of the message.
+     */
+    public UserActionMessageEvent(@NotNull MineManiaUser user, @NotNull List<String> message) {
         StringBuilder builder = new StringBuilder();
         message.forEach(item -> builder.append(item).append("\n"));
 
@@ -44,10 +65,16 @@ public class ServerMailEvent implements Event {
         this.message = builder.substring(0, builder.length() - 1);
     }
 
+    @Override
     public @NotNull MineManiaUser getUser() {
         return this.user;
     }
 
+    /**
+     * Used to get the instance of the message.
+     *
+     * @return The instance of the message.
+     */
     public @NotNull String getMessage() {
         return this.message;
     }

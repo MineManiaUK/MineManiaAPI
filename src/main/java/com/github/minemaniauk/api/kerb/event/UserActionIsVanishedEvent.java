@@ -18,42 +18,33 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.minemaniauk.api;
+package com.github.minemaniauk.api.kerb.event;
 
-import com.github.minemaniauk.api.kerb.EventManager;
-import com.github.minemaniauk.api.kerb.event.ServerMailEvent;
+import com.github.kerbity.kerb.event.SettableEvent;
+import com.github.minemaniauk.api.user.MineManiaUser;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-
-public class UserActionSet {
+/**
+ * Represents a user action is vanished event.
+ * The settable event boolean is used to set
+ * weather or not they are vanished on the server.
+ * Null if they are not online.
+ */
+public class UserActionIsVanishedEvent extends SettableEvent<Boolean> implements UserActionEvent {
 
     private final @NotNull MineManiaUser user;
 
-    public UserActionSet(@NotNull MineManiaUser user) {
+    /**
+     * An event used to check if a player is vanished.
+     *
+     * @param user The instance of the user to check.
+     */
+    public UserActionIsVanishedEvent(@NotNull MineManiaUser user) {
         this.user = user;
     }
 
-    public @NotNull UserActionSet sendMessage(@NotNull String message) {
-        EventManager.get().callEvent(new ServerMailEvent(
-                this.user, message
-        ));
-        return this;
+    @Override
+    public @NotNull MineManiaUser getUser() {
+        return this.user;
     }
-
-    public @NotNull UserActionSet sendMessage(@NotNull List<String> message) {
-        EventManager.get().callEvent(new ServerMailEvent(
-                this.user, message
-        ));
-        return this;
-    }
-
-//
-//    boolean isOnline();
-//
-//    boolean isVanished();
-//
-//    boolean hasPermission(@NotNull String permission);
-//
-//    boolean hasPermission(@NotNull List<String> permissionList);
 }
