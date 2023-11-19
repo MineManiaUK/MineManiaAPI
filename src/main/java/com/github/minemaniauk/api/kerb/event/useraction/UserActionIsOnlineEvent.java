@@ -18,20 +18,32 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.minemaniauk.api.kerb.event;
+package com.github.minemaniauk.api.kerb.event.useraction;
 
+import com.github.kerbity.kerb.event.SettableEvent;
 import com.github.minemaniauk.api.user.MineManiaUser;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Represents a user action event.
+ * Represents a user action is online event.
+ * The settable event boolean is used to set
+ * weather or not they are on the server.
  */
-public interface UserActionEvent {
+public class UserActionIsOnlineEvent extends SettableEvent<Boolean> implements UserActionEvent {
+
+    private final @NotNull MineManiaUser user;
 
     /**
-     * Used to get the instance of the user.
+     * An event used to check if a player is online.
      *
-     * @return The instance of the user.
+     * @param user The instance of the user to check.
      */
-    @NotNull MineManiaUser getUser();
+    public UserActionIsOnlineEvent(@NotNull MineManiaUser user) {
+        this.user = user;
+    }
+
+    @Override
+    public @NotNull MineManiaUser getUser() {
+        return this.user;
+    }
 }

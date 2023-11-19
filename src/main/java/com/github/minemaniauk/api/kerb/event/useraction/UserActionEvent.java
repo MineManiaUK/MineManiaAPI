@@ -18,33 +18,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.minemaniauk.api.kerb.event;
+package com.github.minemaniauk.api.kerb.event.useraction;
 
-import com.github.kerbity.kerb.event.SettableEvent;
 import com.github.minemaniauk.api.user.MineManiaUser;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Represents a user action is vanished event.
- * The settable event boolean is used to set
- * weather or not they are vanished on the server.
- * Null if they are not online.
+ * Represents a user action event.
  */
-public class UserActionIsVanishedEvent extends SettableEvent<Boolean> implements UserActionEvent {
-
-    private final @NotNull MineManiaUser user;
+public interface UserActionEvent {
 
     /**
-     * An event used to check if a player is vanished.
+     * Used to get the instance of the user.
      *
-     * @param user The instance of the user to check.
+     * @return The instance of the user.
      */
-    public UserActionIsVanishedEvent(@NotNull MineManiaUser user) {
-        this.user = user;
-    }
-
-    @Override
-    public @NotNull MineManiaUser getUser() {
-        return this.user;
-    }
+    @NotNull MineManiaUser getUser();
 }

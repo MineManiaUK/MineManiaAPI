@@ -22,10 +22,10 @@ package com.github.minemaniauk.api.user;
 
 import com.github.kerbity.kerb.result.CompletableResultSet;
 import com.github.minemaniauk.api.kerb.EventManager;
-import com.github.minemaniauk.api.kerb.event.UserActionHasPermissionListEvent;
-import com.github.minemaniauk.api.kerb.event.UserActionIsOnlineEvent;
-import com.github.minemaniauk.api.kerb.event.UserActionIsVanishedEvent;
-import com.github.minemaniauk.api.kerb.event.UserActionMessageEvent;
+import com.github.minemaniauk.api.kerb.event.useraction.UserActionHasPermissionListEvent;
+import com.github.minemaniauk.api.kerb.event.useraction.UserActionIsOnlineEvent;
+import com.github.minemaniauk.api.kerb.event.useraction.UserActionIsVanishedEvent;
+import com.github.minemaniauk.api.kerb.event.useraction.UserActionMessageEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
