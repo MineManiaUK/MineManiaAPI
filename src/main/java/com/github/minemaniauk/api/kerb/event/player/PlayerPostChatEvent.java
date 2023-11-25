@@ -20,29 +20,29 @@
 
 package com.github.minemaniauk.api.kerb.event.player;
 
+import com.github.kerbity.kerb.event.CancellableEvent;
 import com.github.minemaniauk.api.user.MineManiaUser;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * Represents a player chat event.
- * Used as a broadcast, to tell the other servers
- * a chat event was finalised and should be broadcast
- * to the players on certain servers.
+ * Called when a player sends a message on a server.
+ * This will contain the message formatted.
  */
-public class PlayerChatEvent implements PlayerEvent {
+public class PlayerPostChatEvent extends CancellableEvent implements PlayerEvent {
 
     private final @NotNull MineManiaUser user;
-    private final @NotNull String formattedMessage;
+    private final @NotNull String message;
 
     /**
      * Used to create a player chat event.
      *
-     * @param user             The instance of the user sending the message.
-     * @param formattedMessage The instance of the formatted message.
+     * @param user    The instance of the user that sent the message.
+     * @param message The instance of the message.
      */
-    public PlayerChatEvent(@NotNull MineManiaUser user, @NotNull String formattedMessage) {
+    public PlayerPostChatEvent(@NotNull MineManiaUser user, @NotNull String message) {
         this.user = user;
-        this.formattedMessage = formattedMessage;
+        this.message = message;
     }
 
     @Override
@@ -51,11 +51,11 @@ public class PlayerChatEvent implements PlayerEvent {
     }
 
     /**
-     * Used to get the instance of the formatted message.
+     * Used to get the instance of the message.
      *
-     * @return The instance of the formatted message.
+     * @return The instance of the message.
      */
-    public @NotNull String getFormattedMessage() {
-        return this.formattedMessage;
+    public @NotNull String getMessage() {
+        return this.message;
     }
 }
