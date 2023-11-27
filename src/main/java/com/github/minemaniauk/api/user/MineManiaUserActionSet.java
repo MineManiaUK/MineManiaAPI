@@ -21,7 +21,7 @@
 package com.github.minemaniauk.api.user;
 
 import com.github.kerbity.kerb.result.CompletableResultSet;
-import com.github.minemaniauk.api.kerb.EventManager;
+import com.github.minemaniauk.api.MineManiaAPI;
 import com.github.minemaniauk.api.kerb.event.useraction.UserActionHasPermissionListEvent;
 import com.github.minemaniauk.api.kerb.event.useraction.UserActionIsOnlineEvent;
 import com.github.minemaniauk.api.kerb.event.useraction.UserActionIsVanishedEvent;
@@ -194,7 +194,7 @@ public class MineManiaUserActionSet {
 
         // Check if the event contains a true value, they have the permission.
         new Thread(() -> result.addResult(
-                EventManager.get()
+                MineManiaAPI.getInstance()
                         .callEvent(new UserActionHasPermissionListEvent(this.user, permissionList))
                         .waitForComplete()
                         .containsSettable(true)

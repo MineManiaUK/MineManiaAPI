@@ -18,20 +18,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.minemaniauk.api.kerb;
+package com.github.minemaniauk.api;
 
 import com.github.kerbity.kerb.client.KerbClient;
+import com.github.smuddgge.squishyconfiguration.interfaces.Configuration;
+import com.github.smuddgge.squishydatabase.interfaces.Database;
 import org.jetbrains.annotations.NotNull;
 
-public class EventManager {
+public interface MineManiaAPI {
 
-    private static KerbClient client;
+    @NotNull KerbClient getKerbClient();
 
-    public static void set(@NotNull KerbClient client) {
-        EventManager.client = client;
+    @NotNull Database getDatabase();
+
+    static @NotNull MineManiaAPI getInstance() {
+        return new MineManiaAPIAdapter(MineManiaAPIInstance.getList());
     }
 
-    public static @NotNull KerbClient get() {
-        return EventManager.client;
+    static @NotNull MineManiaAPI create(@NotNull Configuration configuration) {
+        return new MineManiaAPIInstance(configuration);
     }
 }

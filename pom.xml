@@ -31,6 +31,13 @@
             <scope>compile</scope>
         </dependency>
 
+        <!-- Class indexing -->
+        <dependency>
+            <groupId>org.atteo.classindex</groupId>
+            <artifactId>classindex</artifactId>
+            <version>3.13</version>
+        </dependency>
+
         <!-- Jupiter Tests -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -51,6 +58,13 @@
             <groupId>com.github.Kerbity</groupId>
             <artifactId>Kerb</artifactId>
             <version>1.3.0</version>
+        </dependency>
+
+        <!-- Database Library -->
+        <dependency>
+            <groupId>com.github.smuddgge</groupId>
+            <artifactId>SquishyDatabase</artifactId>
+            <version>3.0.1</version>
         </dependency>
     </dependencies>
 
