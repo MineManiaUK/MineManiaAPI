@@ -20,8 +20,13 @@
 
 package com.github.minemaniauk.api.kerb.event.player;
 
+import com.github.kerbity.kerb.event.CompletableEvent;
+import com.github.minemaniauk.api.format.ChatFormat;
+import com.github.minemaniauk.api.format.ChatFormatPriority;
 import com.github.minemaniauk.api.user.MineManiaUser;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 /**
  * Represents a player chat event.
@@ -29,20 +34,26 @@ import org.jetbrains.annotations.NotNull;
  * a chat event was finalised and should be broadcast
  * to the players on certain servers.
  */
-public class PlayerChatEvent implements PlayerEvent {
+public class PlayerChatEvent extends CompletableEvent implements PlayerEvent {
 
     private final @NotNull MineManiaUser user;
     private final @NotNull String formattedMessage;
+    private final @NotNull List<String> serverWhiteList;
 
     /**
      * Used to create a player chat event.
      *
      * @param user             The instance of the user sending the message.
      * @param formattedMessage The instance of the formatted message.
+     * @param serverWhiteList  The instance of the servers to send the chat message to.
      */
-    public PlayerChatEvent(@NotNull MineManiaUser user, @NotNull String formattedMessage) {
+    public PlayerChatEvent(@NotNull MineManiaUser user,
+                           @NotNull String formattedMessage,
+                           @NotNull List<String> serverWhiteList) {
+
         this.user = user;
         this.formattedMessage = formattedMessage;
+        this.serverWhiteList = serverWhiteList;
     }
 
     @Override
@@ -57,5 +68,15 @@ public class PlayerChatEvent implements PlayerEvent {
      */
     public @NotNull String getFormattedMessage() {
         return this.formattedMessage;
+    }
+
+    /**
+     * Used to get the list of server that the
+     * message should be broadcast on.
+     *
+     * @return The list of servers.
+     */
+    public @NotNull List<String> getServerWhiteList() {
+        return this.serverWhiteList;
     }
 }

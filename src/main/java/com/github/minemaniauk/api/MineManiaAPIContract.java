@@ -22,6 +22,7 @@ package com.github.minemaniauk.api;
 
 import com.github.kerbity.kerb.client.listener.EventListener;
 import com.github.kerbity.kerb.event.Event;
+import com.github.minemaniauk.api.kerb.event.player.PlayerChatEvent;
 import com.github.minemaniauk.api.kerb.event.useraction.UserActionHasPermissionListEvent;
 import com.github.minemaniauk.api.kerb.event.useraction.UserActionIsOnlineEvent;
 import com.github.minemaniauk.api.kerb.event.useraction.UserActionIsVanishedEvent;
@@ -76,4 +77,12 @@ public interface MineManiaAPIContract extends EventListener<Event> {
      * @return The event result.
      */
     @Nullable UserActionMessageEvent onMessage(@NotNull UserActionMessageEvent event);
+
+    /**
+     * Called when the server should broadcast a message to all the players.
+     *
+     * @param event The instance of the event.
+     * @return The completed event instance.
+     */
+    @NotNull PlayerChatEvent onChatEvent(@NotNull PlayerChatEvent event);
 }

@@ -21,8 +21,12 @@
 package com.github.minemaniauk.api.kerb.event.player;
 
 import com.github.kerbity.kerb.event.CancellableEvent;
+import com.github.minemaniauk.api.format.ChatFormat;
 import com.github.minemaniauk.api.user.MineManiaUser;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a player chat event.
@@ -33,6 +37,9 @@ public class PlayerPostChatEvent extends CancellableEvent implements PlayerEvent
 
     private final @NotNull MineManiaUser user;
     private final @NotNull String message;
+    private final @NotNull ChatFormat chatFormat;
+
+    private @NotNull List<String> serverWhitelist;
 
     /**
      * Used to create a player chat event.
@@ -43,6 +50,9 @@ public class PlayerPostChatEvent extends CancellableEvent implements PlayerEvent
     public PlayerPostChatEvent(@NotNull MineManiaUser user, @NotNull String message) {
         this.user = user;
         this.message = message;
+
+        this.serverWhitelist = new ArrayList<>();
+        this.chatFormat = new ChatFormat();
     }
 
     @Override
@@ -57,5 +67,48 @@ public class PlayerPostChatEvent extends CancellableEvent implements PlayerEvent
      */
     public @NotNull String getMessage() {
         return this.message;
+    }
+
+    /**
+     * Used to get the instance of the chat format.
+     * You can use this instance to add a prefix and postfix to the message.
+     *
+     * @return The instance of the chat format.
+     */
+    public @NotNull ChatFormat getChatFormat() {
+        return this.chatFormat;
+    }
+
+    /**
+     * Used to get the current list of servers that the
+     * message should be broadcast on.
+     *
+     * @return The list of whitelisted servers.
+     */
+    public @NotNull List<String> getServerWhitelist() {
+        return this.serverWhitelist;
+    }
+
+    /**
+     * Used to add a server to the server whitelist.
+     * The list of servers the message should be broadcast on.
+     *
+     * @param serverName The server's name.
+     * @return This instance.
+     */
+    public @NotNull PlayerPostChatEvent addWhitelistedServer(@NotNull String serverName) {
+        this.serverWhitelist.add(serverName);
+        return this;
+    }
+
+    /**
+     * Used to add a list of servers to the server whitelist.
+     *
+     * @param serverWhitelist The list of servers.
+     * @return This instance.
+     */
+    public @NotNull PlayerPostChatEvent addWhitelistedServer(@NotNull List<String> serverWhitelist) {
+        this.serverWhitelist.addAll(serverWhitelist);
+        return this;
     }
 }
