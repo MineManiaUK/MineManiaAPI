@@ -62,7 +62,7 @@ public class MineManiaUserActionSet {
      * @return True if the message was sent.
      */
     public boolean sendMessage(@NotNull String message) {
-        CompletableResultSet<UserActionMessageEvent> result = EventManager.get()
+        CompletableResultSet<UserActionMessageEvent> result = MineManiaAPI.getInstance()
                 .callEvent(new UserActionMessageEvent(this.user, message));
 
         // Wait for the final result to be completed.
@@ -87,7 +87,7 @@ public class MineManiaUserActionSet {
      * @return True if the message was sent.
      */
     public boolean sendMessage(@NotNull List<String> message) {
-        CompletableResultSet<UserActionMessageEvent> result = EventManager.get()
+        CompletableResultSet<UserActionMessageEvent> result = MineManiaAPI.getInstance()
                 .callEvent(new UserActionMessageEvent(this.user, message));
 
         // Wait for the final result to be completed.
@@ -134,7 +134,7 @@ public class MineManiaUserActionSet {
 
         // Check if the event contains a true value, they are online.
         new Thread(() -> result.addResult(
-                EventManager.get()
+                MineManiaAPI.getInstance()
                         .callEvent(new UserActionIsOnlineEvent(this.user))
                         .waitForComplete()
                         .containsSettable(true)
@@ -153,7 +153,7 @@ public class MineManiaUserActionSet {
 
         // Check if the event contains a true value, they are vanished.
         new Thread(() -> result.addResult(
-                EventManager.get()
+                MineManiaAPI.getInstance()
                         .callEvent(new UserActionIsVanishedEvent(this.user))
                         .waitForComplete()
                         .containsSettable(true)
@@ -173,7 +173,7 @@ public class MineManiaUserActionSet {
 
         // Check if the event contains a true value, they have the permission.
         new Thread(() -> result.addResult(
-                EventManager.get()
+                MineManiaAPI.getInstance()
                         .callEvent(new UserActionHasPermissionListEvent(this.user, permission))
                         .waitForComplete()
                         .containsSettable(true)

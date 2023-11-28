@@ -21,21 +21,66 @@
 package com.github.minemaniauk.api;
 
 import com.github.kerbity.kerb.client.KerbClient;
+import com.github.kerbity.kerb.event.Event;
+import com.github.kerbity.kerb.result.CompletableResultSet;
 import com.github.smuddgge.squishyconfiguration.interfaces.Configuration;
 import com.github.smuddgge.squishydatabase.interfaces.Database;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Represents the instance of the
+ * mine mania api.
+ */
 public interface MineManiaAPI {
 
+    /**
+     * Used to get the instance of the kerb client
+     * connection.
+     *
+     * @return The instance of the kerb client.
+     */
     @NotNull KerbClient getKerbClient();
 
+    /**
+     * Used to get the instance of the database
+     * connection.
+     *
+     * @return The instance of the database.
+     */
     @NotNull Database getDatabase();
 
+    /**
+     * Used to call a kerb event.
+     * See {@link KerbClient#callEvent(Event)}
+     * for more infomation.
+     *
+     * @param event The instance of the event.
+     * @param <T>   The type of event.
+     * @return The requested result set.
+     */
+    @NotNull <T extends Event> CompletableResultSet<T> callEvent(T event);
+
+    /**
+     * Used to get the instance of the
+     * api connection.
+     *
+     * @return The instance of the api.
+     */
     static @NotNull MineManiaAPI getInstance() {
-        return new MineManiaAPIAdapter(MineManiaAPIInstance.getList());
+        return MineManiaAPIAdapter.getInstance();
     }
 
-    static @NotNull MineManiaAPI create(@NotNull Configuration configuration) {
-        return new MineManiaAPIInstance(configuration);
+    /**
+     * Used to create and register a new instance of
+     * an api connection.
+     *
+     * @param configuration The instance of the configuration file.
+     * @param contract      The instance of the mine mania contract.
+     * @return The instance of the api.
+     */
+    static @NotNull MineManiaAPI createAndSet(@NotNull Configuration configuration,
+                                              @NotNull MineManiaAPIContract contract) {
+
+        return new MineManiaAPIAdapter(configuration, contract);
     }
 }

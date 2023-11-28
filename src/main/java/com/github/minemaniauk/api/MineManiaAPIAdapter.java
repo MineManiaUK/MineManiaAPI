@@ -21,42 +21,99 @@
 package com.github.minemaniauk.api;
 
 import com.github.kerbity.kerb.client.KerbClient;
+import com.github.kerbity.kerb.event.Event;
+import com.github.kerbity.kerb.event.Priority;
+import com.github.kerbity.kerb.result.CompletableResultSet;
+import com.github.smuddgge.squishyconfiguration.interfaces.Configuration;
+import com.github.smuddgge.squishydatabase.DatabaseCredentials;
+import com.github.smuddgge.squishydatabase.DatabaseFactory;
 import com.github.smuddgge.squishydatabase.interfaces.Database;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
+import java.io.File;
+import java.time.Duration;
 
 /**
- * Represents a mine mania api adapter for
- * multiple api connections.
+ * Represents the mine mania api adapter.
+ * Used to create the api connection.
  */
 public class MineManiaAPIAdapter implements MineManiaAPI {
 
-    private final @NotNull List<@NotNull MineManiaAPI> apiList;
+    private static @Nullable MineManiaAPI instance;
 
-    public MineManiaAPIAdapter(@NotNull List<@NotNull MineManiaAPI> apiList) {
-        this.apiList = apiList;
+    private final @NotNull Configuration configuration;
+    private final @NotNull MineManiaAPIContract contract;
+    private final @NotNull KerbClient client;
+    private final @NotNull Database database;
+
+    /**
+     * Used to create a new instance of an api connection.
+     *
+     * @param configuration The instance of the configuration.
+     * @param contract      The instance of the contract.
+     */
+    public MineManiaAPIAdapter(@NotNull Configuration configuration, @NotNull MineManiaAPIContract contract) {
+        this.configuration = configuration;
+        this.contract = contract;
+
+        // Create the instance of the kerb client.
+        this.client = new KerbClient(
+                configuration.getString("kerb.client_name"),
+                configuration.getInteger("kerb.server_port"),
+                configuration.getString("kerb.server_address"),
+                new File("server-certificate.p12"),
+                new File("client-certificate.p12"),
+                configuration.getString("kerb.password"),
+                Duration.ofMillis(configuration.getInteger("kerb.max_wait_time_millis"))
+        );
+        this.client.connect();
+        this.client.registerListener(Priority.LOW, contract);
+
+        //  Create the instance of the database.
+        this.database = DatabaseFactory.MONGO.create(DatabaseCredentials.MONGO(
+                configuration.getString("database.connection_string"),
+                configuration.getString("database.database_name")
+        )).setup();
+
+        // Set the instance of the mine mania api.
+        MineManiaAPIAdapter.setInstance(this);
     }
 
     @Override
     public @NotNull KerbClient getKerbClient() {
-        if (this.apiList.isEmpty()) {
-            throw new RuntimeException("Tried to get the kerb client, but there are no registered api connections. "
-                    + "Please create a new instance of the mine mania api with the correct credentials."
-                    + "This can be done with MineManiaAPI.create();"
-            );
-        }
-        return this.apiList.get(0).getKerbClient();
+        return this.client;
     }
 
     @Override
     public @NotNull Database getDatabase() {
-        if (this.apiList.isEmpty()) {
-            throw new RuntimeException("Tried to get the kerb client, but there are no registered api connections. "
-                    + "Please create a new instance of the mine mania api with the correct credentials."
-                    + "This can be done with MineManiaAPI.create();"
-            );
+        return this.database;
+    }
+
+    @Override
+    public @NotNull <T extends Event> CompletableResultSet<T> callEvent(T event) {
+        return this.client.callEvent(event);
+    }
+
+    /**
+     * Used to get the list of active api connections.
+     *
+     * @return The list of api connections.
+     */
+    public static @NotNull MineManiaAPI getInstance() {
+        if (MineManiaAPIAdapter.instance == null) {
+            throw new RuntimeException("Attempted to get the instance of the mine mania api but was null.");
         }
-        return this.apiList.get(0).getDatabase();
+
+        return MineManiaAPIAdapter.instance;
+    }
+
+    /**
+     * Used to set the instance of the mine mania api.
+     *
+     * @param instance The instance of the api.
+     */
+    public static void setInstance(@Nullable MineManiaAPI instance) {
+        MineManiaAPIAdapter.instance = instance;
     }
 }

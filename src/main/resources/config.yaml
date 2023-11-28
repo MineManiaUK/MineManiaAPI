@@ -15,4 +15,5 @@ kerb:
   max_wait_time_millis: 400
 
 database:
-
+  connection_string: ""
+  database_name: ""
