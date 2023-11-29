@@ -64,8 +64,8 @@ public class MineManiaAPIAdapter implements MineManiaAPI {
                     configuration.getString("kerb.client_name"),
                     configuration.getInteger("kerb.server_port"),
                     configuration.getString("kerb.server_address"),
-                    new File(configuration.getString("kerb.server_certificate_path")),
                     new File(configuration.getString("kerb.client_certificate_path")),
+                    new File(configuration.getString("kerb.server_certificate_path")),
                     configuration.getString("kerb.password"),
                     Duration.ofMillis(configuration.getInteger("kerb.max_wait_time_millis"))
             );
