@@ -39,7 +39,7 @@ public class PlayerPostChatEvent extends CancellableEvent implements PlayerEvent
     private final @NotNull String message;
     private final @NotNull ChatFormat chatFormat;
 
-    private @NotNull List<String> serverWhitelist;
+    private final @NotNull List<String> serverWhitelist;
 
     /**
      * Used to create a player chat event.

@@ -26,5 +26,5 @@ package com.github.minemaniauk.api.format;
  * The higher the priority the closer it will be to the message.
  */
 public enum ChatFormatPriority {
-    LOW, MED, HIGH;
+    LOW, MED, HIGH
 }

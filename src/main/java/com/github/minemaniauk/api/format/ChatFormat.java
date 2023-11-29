@@ -34,8 +34,8 @@ import java.util.Map;
  */
 public class ChatFormat {
 
-    private @NotNull Map<String, ChatFormatPriority> prefix;
-    private @NotNull Map<String, ChatFormatPriority> postfix;
+    private final @NotNull Map<String, ChatFormatPriority> prefix;
+    private final @NotNull Map<String, ChatFormatPriority> postfix;
 
     /**
      * Used to create a new chat format.

@@ -27,6 +27,7 @@ import com.github.kerbity.kerb.result.CompletableResultSet;
 import com.github.smuddgge.squishyconfiguration.interfaces.Configuration;
 import com.github.smuddgge.squishydatabase.DatabaseCredentials;
 import com.github.smuddgge.squishydatabase.DatabaseFactory;
+import com.github.smuddgge.squishydatabase.console.Console;
 import com.github.smuddgge.squishydatabase.interfaces.Database;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -54,30 +55,42 @@ public class MineManiaAPIAdapter implements MineManiaAPI {
      * @param contract      The instance of the contract.
      */
     public MineManiaAPIAdapter(@NotNull Configuration configuration, @NotNull MineManiaAPIContract contract) {
-        this.configuration = configuration;
-        this.contract = contract;
+        try {
+            this.configuration = configuration;
+            this.contract = contract;
 
-        // Create the instance of the kerb client.
-        this.client = new KerbClient(
-                configuration.getString("kerb.client_name"),
-                configuration.getInteger("kerb.server_port"),
-                configuration.getString("kerb.server_address"),
-                new File("server-certificate.p12"),
-                new File("client-certificate.p12"),
-                configuration.getString("kerb.password"),
-                Duration.ofMillis(configuration.getInteger("kerb.max_wait_time_millis"))
-        );
-        this.client.connect();
-        this.client.registerListener(Priority.LOW, contract);
+            // Create the instance of the kerb client.
+            this.client = new KerbClient(
+                    configuration.getString("kerb.client_name"),
+                    configuration.getInteger("kerb.server_port"),
+                    configuration.getString("kerb.server_address"),
+                    new File(configuration.getString("kerb.server_certificate_path")),
+                    new File(configuration.getString("kerb.client_certificate_path")),
+                    configuration.getString("kerb.password"),
+                    Duration.ofMillis(configuration.getInteger("kerb.max_wait_time_millis"))
+            );
+            this.client.connect();
+            this.client.registerListener(Priority.LOW, contract);
 
-        //  Create the instance of the database.
-        this.database = DatabaseFactory.MONGO.create(DatabaseCredentials.MONGO(
-                configuration.getString("database.connection_string"),
-                configuration.getString("database.database_name")
-        )).setup();
+            //  Create the instance of the database.
+            this.database = DatabaseFactory.MONGO.create(DatabaseCredentials.MONGO(
+                    configuration.getString("database.connection_string"),
+                    configuration.getString("database.database_name")
+            )).setup();
 
-        // Set the instance of the mine mania api.
-        MineManiaAPIAdapter.setInstance(this);
+            // Set the instance of the mine mania api.
+            MineManiaAPIAdapter.setInstance(this);
+
+        } catch (Exception exception) {
+            Console.log("Client Name: " + configuration.getString("kerb.client_name"));
+            Console.log("Server Port: " + configuration.getInteger("kerb.server_port"));
+            Console.log("Server Address: " + configuration.getString("kerb.server_address"));
+            Console.log("Server Certificate Path: " + new File(configuration.getString("kerb.server_certificate_path")).getAbsolutePath());
+            Console.log("Client Certificate Path: " + new File(configuration.getString("kerb.client_certificate_path")).getAbsolutePath());
+            Console.log("Password: " + configuration.getString("kerb.password"));
+            Console.log("Max Wait Time Millis: " + Duration.ofMillis(configuration.getInteger("kerb.max_wait_time_millis")));
+            throw new RuntimeException(exception);
+        }
     }
 
     @Override
