@@ -43,6 +43,7 @@ public interface MineManiaAPIContract extends EventListener<Event> {
         if (event instanceof UserActionIsOnlineEvent userEvent) return this.onIsOnline(userEvent);
         if (event instanceof UserActionIsVanishedEvent userEvent) return this.onIsVanished(userEvent);
         if (event instanceof UserActionMessageEvent userEvent) return this.onMessage(userEvent);
+        if (event instanceof PlayerChatEvent playerEvent) return this.onChatEvent(playerEvent);
         return event;
     }
 
