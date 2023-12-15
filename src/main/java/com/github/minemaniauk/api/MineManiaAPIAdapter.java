@@ -24,6 +24,8 @@ import com.github.kerbity.kerb.client.KerbClient;
 import com.github.kerbity.kerb.event.Event;
 import com.github.kerbity.kerb.event.Priority;
 import com.github.kerbity.kerb.result.CompletableResultSet;
+import com.github.minemaniauk.api.database.collection.UserCollection;
+import com.github.minemaniauk.api.database.record.UserRecord;
 import com.github.smuddgge.squishyconfiguration.interfaces.Configuration;
 import com.github.smuddgge.squishydatabase.DatabaseCredentials;
 import com.github.smuddgge.squishydatabase.DatabaseFactory;
@@ -77,6 +79,9 @@ public class MineManiaAPIAdapter implements MineManiaAPI {
                     configuration.getString("database.connection_string"),
                     configuration.getString("database.database_name")
             )).setup();
+
+            // Set up the tables.
+            this.database.createTable(new UserCollection());
 
             // Set the instance of the mine mania api.
             MineManiaAPIAdapter.setInstance(this);
