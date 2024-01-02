@@ -38,11 +38,25 @@ import java.util.UUID;
  */
 public class GameRoomRecord extends Record {
 
-    private @Field(type = RecordFieldType.PRIMARY) String uuid;
-    private String owner_uuid;
-    private String player_uuids;
-    private String game_type;
+    private final @NotNull @Field(type = RecordFieldType.PRIMARY) String uuid;
+    private @NotNull String owner_uuid;
+    private @NotNull String player_uuids;
+    private final @NotNull String game_type;
     private boolean is_private;
+
+    /**
+     * Used to create a new game room record.
+     *
+     * @param ownerUuid The game room owner's uuid.
+     * @param gameType The type of game the room is for.
+     */
+    public GameRoomRecord(@NotNull UUID ownerUuid, @NotNull GameType gameType) {
+        this.uuid = UUID.randomUUID().toString();
+        this.owner_uuid = ownerUuid.toString();
+        this.player_uuids = "";
+        this.game_type = gameType.toString();
+        this.is_private = false;
+    }
 
     /**
      * Used to get the game rooms unique identifier.
