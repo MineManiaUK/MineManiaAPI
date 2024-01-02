@@ -18,11 +18,23 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.minemaniauk.api.game;
+package com.github.minemaniauk.api.kerb.event.gameroom;
+
+import com.github.minemaniauk.api.database.record.GameRoomRecord;
+import org.jetbrains.annotations.NotNull;
 
 /**
- * Represents all the types of games.
+ * Represents a game room event.
  */
-public enum GameType {
-    SPLEEF, HIDE_AND_SEEK, TOWER_DEFENCE, TNT_RUN
+public interface GameRoomEvent {
+
+    /**
+     * Used to get the instance of the game room.
+     * <li>
+     * This method uses the database. Be careful with multiple calls.
+     * </li>
+     *
+     * @return The instance of the game room.
+     */
+    @NotNull GameRoomRecord getGameRoom();
 }

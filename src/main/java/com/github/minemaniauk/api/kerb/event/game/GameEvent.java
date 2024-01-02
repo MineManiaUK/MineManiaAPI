@@ -18,11 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.minemaniauk.api.game;
+package com.github.minemaniauk.api.kerb.event.game;
 
 /**
- * Represents all the types of games.
+ * Represents a game event.
  */
-public enum GameType {
-    SPLEEF, HIDE_AND_SEEK, TOWER_DEFENCE, TNT_RUN
+public interface GameEvent {
 }
