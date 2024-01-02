@@ -38,7 +38,8 @@ import java.util.UUID;
  */
 public class GameRoomRecord extends Record {
 
-    private final @NotNull @Field(type = RecordFieldType.PRIMARY) String uuid;
+    private final @NotNull
+    @Field(type = RecordFieldType.PRIMARY) String uuid;
     private @NotNull String owner_uuid;
     private @NotNull String player_uuids;
     private final @NotNull String game_type;
@@ -48,7 +49,7 @@ public class GameRoomRecord extends Record {
      * Used to create a new game room record.
      *
      * @param ownerUuid The game room owner's uuid.
-     * @param gameType The type of game the room is for.
+     * @param gameType  The type of game the room is for.
      */
     public GameRoomRecord(@NotNull UUID ownerUuid, @NotNull GameType gameType) {
         this.uuid = UUID.randomUUID().toString();
