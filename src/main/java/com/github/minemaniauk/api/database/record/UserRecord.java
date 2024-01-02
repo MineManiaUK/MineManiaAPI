@@ -36,8 +36,8 @@ public class UserRecord extends Record {
 
     private @Field(type = RecordFieldType.PRIMARY) String mc_uuid;
     private String mc_name;
-    private String name = "None";
-    private String email = "e@e.e";
+    private final String name = "None";
+    private final String email = "e@e.e";
     private long paws = 0;
 
     /**

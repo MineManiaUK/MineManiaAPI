@@ -27,8 +27,11 @@ import com.github.minemaniauk.api.kerb.event.useraction.UserActionHasPermissionL
 import com.github.minemaniauk.api.kerb.event.useraction.UserActionIsOnlineEvent;
 import com.github.minemaniauk.api.kerb.event.useraction.UserActionIsVanishedEvent;
 import com.github.minemaniauk.api.kerb.event.useraction.UserActionMessageEvent;
+import com.github.minemaniauk.api.user.MineManiaUser;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.UUID;
 
 /**
  * Represents a mine mania api contract.
@@ -46,6 +49,22 @@ public interface MineManiaAPIContract extends EventListener<Event> {
         if (event instanceof PlayerChatEvent playerEvent) return this.onChatEvent(playerEvent);
         return event;
     }
+
+    /**
+     * Used to get a mine mania user from the players uuid.
+     *
+     * @param uuid The uuid of the player.
+     * @return The mine mania user.
+     */
+    @NotNull MineManiaUser getUser(@NotNull UUID uuid);
+
+    /**
+     * Used to get a mine mania user from the player's name.
+     *
+     * @param name The name of the player.
+     * @return The mine mania user.
+     */
+    @NotNull MineManiaUser getUser(@NotNull String name);
 
     /**
      * Called when a server wants to check a users permissions.

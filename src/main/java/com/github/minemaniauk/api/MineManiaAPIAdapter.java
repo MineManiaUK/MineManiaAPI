@@ -25,7 +25,6 @@ import com.github.kerbity.kerb.event.Event;
 import com.github.kerbity.kerb.event.Priority;
 import com.github.kerbity.kerb.result.CompletableResultSet;
 import com.github.minemaniauk.api.database.collection.UserCollection;
-import com.github.minemaniauk.api.database.record.UserRecord;
 import com.github.smuddgge.squishyconfiguration.interfaces.Configuration;
 import com.github.smuddgge.squishydatabase.DatabaseCredentials;
 import com.github.smuddgge.squishydatabase.DatabaseFactory;
@@ -106,6 +105,11 @@ public class MineManiaAPIAdapter implements MineManiaAPI {
     @Override
     public @NotNull Database getDatabase() {
         return this.database;
+    }
+
+    @Override
+    public @NotNull MineManiaAPIContract getContract() {
+        return this.contract;
     }
 
     @Override

@@ -50,6 +50,14 @@ public interface MineManiaAPI {
     @NotNull Database getDatabase();
 
     /**
+     * Used to get the api contract.
+     * Contains useful methods that will be filled out.
+     *
+     * @return The instance of the api contract.
+     */
+    @NotNull MineManiaAPIContract getContract();
+
+    /**
      * Used to call a kerb event.
      * See {@link KerbClient#callEvent(Event)}
      * for more infomation.

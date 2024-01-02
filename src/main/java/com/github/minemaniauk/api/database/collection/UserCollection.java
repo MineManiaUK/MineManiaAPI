@@ -45,7 +45,7 @@ public class UserCollection extends TableAdapter<UserRecord> {
      * @return The optional user record.
      * This will be empty if the record could not be found.
      */
-    public @NotNull Optional<UserRecord> getUser(@NotNull UUID minecraftUuid) {
+    public @NotNull Optional<UserRecord> getUserRecord(@NotNull UUID minecraftUuid) {
         String minecraftUuidString = minecraftUuid.toString();
         UserRecord user = this.getFirstRecord(new Query().match("mc_uuid", minecraftUuidString));
         if (user == null) return Optional.empty();
