@@ -20,7 +20,7 @@
 
 package com.github.minemaniauk.api.kerb.event.player;
 
-import com.github.kerbity.kerb.event.CancellableEvent;
+import com.github.kerbity.kerb.packet.event.CancellableEvent;
 import com.github.minemaniauk.api.format.ChatFormat;
 import com.github.minemaniauk.api.user.MineManiaUser;
 import org.jetbrains.annotations.NotNull;

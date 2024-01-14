@@ -20,7 +20,7 @@
 
 package com.github.minemaniauk.api.kerb.event.useraction;
 
-import com.github.kerbity.kerb.event.SettableEvent;
+import com.github.kerbity.kerb.packet.event.SettableEvent;
 import com.github.minemaniauk.api.user.MineManiaUser;
 import org.jetbrains.annotations.NotNull;
 

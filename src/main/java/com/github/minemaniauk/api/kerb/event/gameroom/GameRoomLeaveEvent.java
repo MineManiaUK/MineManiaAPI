@@ -20,7 +20,7 @@
 
 package com.github.minemaniauk.api.kerb.event.gameroom;
 
-import com.github.kerbity.kerb.event.Event;
+import com.github.kerbity.kerb.packet.event.Event;
 import com.github.minemaniauk.api.MineManiaAPI;
 import com.github.minemaniauk.api.database.collection.GameRoomCollection;
 import com.github.minemaniauk.api.database.record.GameRoomRecord;

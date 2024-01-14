@@ -21,7 +21,7 @@
 package com.github.minemaniauk.api;
 
 import com.github.kerbity.kerb.client.KerbClient;
-import com.github.kerbity.kerb.event.Event;
+import com.github.kerbity.kerb.packet.event.Event;
 import com.github.kerbity.kerb.result.CompletableResultSet;
 import com.github.smuddgge.squishyconfiguration.interfaces.Configuration;
 import com.github.smuddgge.squishydatabase.interfaces.Database;

@@ -21,8 +21,8 @@
 package com.github.minemaniauk.api;
 
 import com.github.kerbity.kerb.client.KerbClient;
-import com.github.kerbity.kerb.event.Event;
-import com.github.kerbity.kerb.event.Priority;
+import com.github.kerbity.kerb.packet.event.Event;
+import com.github.kerbity.kerb.packet.event.Priority;
 import com.github.kerbity.kerb.result.CompletableResultSet;
 import com.github.minemaniauk.api.database.collection.GameRoomCollection;
 import com.github.minemaniauk.api.database.collection.UserCollection;
@@ -69,7 +69,10 @@ public class MineManiaAPIAdapter implements MineManiaAPI {
                     new File(configuration.getString("kerb.client_certificate_path")),
                     new File(configuration.getString("kerb.server_certificate_path")),
                     configuration.getString("kerb.password"),
-                    Duration.ofMillis(configuration.getInteger("kerb.max_wait_time_millis"))
+                    Duration.ofMillis(configuration.getInteger("kerb.max_wait_time_millis")),
+                    true,
+                    Duration.ofSeconds(10),
+                    -1
             );
             this.client.connect();
             this.client.registerListener(Priority.LOW, contract);

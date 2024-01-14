@@ -21,7 +21,7 @@
 package com.github.minemaniauk.api;
 
 import com.github.kerbity.kerb.client.listener.EventListener;
-import com.github.kerbity.kerb.event.Event;
+import com.github.kerbity.kerb.packet.event.Event;
 import com.github.minemaniauk.api.kerb.event.player.PlayerChatEvent;
 import com.github.minemaniauk.api.kerb.event.useraction.UserActionHasPermissionListEvent;
 import com.github.minemaniauk.api.kerb.event.useraction.UserActionIsOnlineEvent;
