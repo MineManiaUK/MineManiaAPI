@@ -36,7 +36,7 @@ import java.util.List;
 public class PlayerPostChatEvent extends CancellableEvent implements PlayerEvent {
 
     private final @NotNull MineManiaUser user;
-    private final @NotNull String message;
+    private @NotNull String message;
     private final @NotNull ChatFormat chatFormat;
 
     private final @NotNull List<String> serverWhitelist;
@@ -87,6 +87,17 @@ public class PlayerPostChatEvent extends CancellableEvent implements PlayerEvent
      */
     public @NotNull List<String> getServerWhitelist() {
         return this.serverWhitelist;
+    }
+
+    /**
+     * Used to change the content of the message.
+     *
+     * @param message The content of the message.
+     * @return This instance.
+     */
+    public @NotNull PlayerPostChatEvent setMessage(@NotNull String message) {
+        this.message = message;
+        return this;
     }
 
     /**
