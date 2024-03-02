@@ -25,6 +25,7 @@ import com.github.smuddgge.squishydatabase.Query;
 import com.github.smuddgge.squishydatabase.interfaces.TableAdapter;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -69,5 +70,20 @@ public class GameRoomCollection extends TableAdapter<GameRoomRecord> {
 
         if (gameRoomRecord == null) return Optional.empty();
         return Optional.of(gameRoomRecord);
+    }
+
+    /**
+     * Used to get the game room a player is in.
+     *
+     * @param playerUuid The player's uuid.
+     * @return Empty if the player is not in a game room.
+     */
+    public @NotNull Optional<GameRoomRecord> getGameRoomFromPlayer(@NotNull UUID playerUuid) {
+        List<GameRoomRecord> gameRoomRecordList = this.getRecordList();
+
+        for (GameRoomRecord record : gameRoomRecordList) {
+            if (record.getPlayerUuids().contains(playerUuid)) return Optional.of(record);
+        }
+        return Optional.empty();
     }
 }

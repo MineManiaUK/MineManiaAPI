@@ -26,6 +26,7 @@ import com.github.kerbity.kerb.packet.event.Priority;
 import com.github.kerbity.kerb.result.CompletableResultSet;
 import com.github.minemaniauk.api.database.collection.GameRoomCollection;
 import com.github.minemaniauk.api.database.collection.UserCollection;
+import com.github.minemaniauk.api.game.GameManager;
 import com.github.smuddgge.squishyconfiguration.interfaces.Configuration;
 import com.github.smuddgge.squishydatabase.DatabaseCredentials;
 import com.github.smuddgge.squishydatabase.DatabaseFactory;
@@ -49,6 +50,7 @@ public class MineManiaAPIAdapter implements MineManiaAPI {
     private final @NotNull MineManiaAPIContract contract;
     private final @NotNull KerbClient client;
     private final @NotNull Database database;
+    private final @NotNull GameManager gameManager;
 
     /**
      * Used to create a new instance of an api connection.
@@ -87,6 +89,9 @@ public class MineManiaAPIAdapter implements MineManiaAPI {
             this.database.createTable(new UserCollection());
             this.database.createTable(new GameRoomCollection());
 
+            // Set up the game manager.
+            this.gameManager = new GameManager(this);
+
             // Set the instance of the mine mania api.
             MineManiaAPIAdapter.setInstance(this);
 
@@ -115,6 +120,11 @@ public class MineManiaAPIAdapter implements MineManiaAPI {
     @Override
     public @NotNull MineManiaAPIContract getContract() {
         return this.contract;
+    }
+
+    @Override
+    public @NotNull GameManager getGameManager() {
+        return this.gameManager;
     }
 
     @Override

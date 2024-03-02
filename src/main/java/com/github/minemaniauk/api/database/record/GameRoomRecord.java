@@ -21,7 +21,10 @@
 package com.github.minemaniauk.api.database.record;
 
 import com.github.minemaniauk.api.MineManiaAPI;
+import com.github.minemaniauk.api.MineManiaAPIAdapter;
+import com.github.minemaniauk.api.database.collection.GameRoomCollection;
 import com.github.minemaniauk.api.game.GameType;
+import com.github.minemaniauk.api.indicator.Savable;
 import com.github.minemaniauk.api.user.MineManiaUser;
 import com.github.smuddgge.squishydatabase.record.Field;
 import com.github.smuddgge.squishydatabase.record.Record;
@@ -36,14 +39,23 @@ import java.util.UUID;
 /**
  * Represents a game room record.
  */
-public class GameRoomRecord extends Record {
+public class GameRoomRecord extends Record implements Savable {
 
-    private final @NotNull
-    @Field(type = RecordFieldType.PRIMARY) String uuid;
-    private @NotNull String owner_uuid;
-    private @NotNull String player_uuids;
-    private final @NotNull String game_type;
-    private boolean is_private;
+    @Field(type = RecordFieldType.PRIMARY)
+    protected final @NotNull String uuid;
+    protected @NotNull String owner_uuid;
+    protected @NotNull String player_uuids;
+    protected final @NotNull String game_type;
+    protected boolean is_private;
+
+    /**
+     * For database purposes. Game type should not be null!
+     */
+    @SuppressWarnings("all")
+    public GameRoomRecord() {
+        this.uuid = UUID.randomUUID().toString();
+        this.game_type = null;
+    }
 
     /**
      * Used to create a new game room record.
@@ -172,5 +184,12 @@ public class GameRoomRecord extends Record {
         playerUuids.remove(uuid);
         this.player_uuids = String.join(",", playerUuids.stream().map(UUID::toString).toList());
         return this;
+    }
+
+    @Override
+    public void save() {
+        MineManiaAPIAdapter.getInstance().getDatabase()
+                .getTable(GameRoomCollection.class)
+                .insertRecord(this);
     }
 }

@@ -20,13 +20,27 @@
 
 package com.github.minemaniauk.api.game;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.UUID;
+
 /**
- * Represents all the types of games.
+ * Represents an arena.
  */
-public enum GameType {
-    TNT_RUN,
-    BED_WARS,
-    SPLEEF,
-    HIDE_AND_SEEK,
-    TOWER_DEFENCE
+public abstract class Arena {
+
+    private @NotNull UUID identifier;
+    private @NotNull GameType gameType;
+    private @Nullable UUID gameRoomUuid;
+
+    public Arena(@NotNull UUID identifier) {
+        this.identifier = identifier;
+    }
+
+    /**
+     * Called when the arena has been filled
+     * with the next players.
+     */
+    public abstract void onStart();
 }

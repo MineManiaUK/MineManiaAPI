@@ -18,15 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.minemaniauk.api.game;
+package com.github.minemaniauk.api.database.record;
 
-/**
- * Represents all the types of games.
- */
-public enum GameType {
-    TNT_RUN,
-    BED_WARS,
-    SPLEEF,
-    HIDE_AND_SEEK,
-    TOWER_DEFENCE
+public class ArenaRecord {
 }

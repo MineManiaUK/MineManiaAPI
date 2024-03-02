@@ -23,6 +23,7 @@ package com.github.minemaniauk.api;
 import com.github.kerbity.kerb.client.KerbClient;
 import com.github.kerbity.kerb.packet.event.Event;
 import com.github.kerbity.kerb.result.CompletableResultSet;
+import com.github.minemaniauk.api.game.GameManager;
 import com.github.smuddgge.squishyconfiguration.interfaces.Configuration;
 import com.github.smuddgge.squishydatabase.interfaces.Database;
 import org.jetbrains.annotations.NotNull;
@@ -56,6 +57,13 @@ public interface MineManiaAPI {
      * @return The instance of the api contract.
      */
     @NotNull MineManiaAPIContract getContract();
+
+    /**
+     * Used to get the game manager.
+     *
+     * @return Contains methods to interact with games.
+     */
+    @NotNull GameManager getGameManager();
 
     /**
      * Used to call a kerb event.
