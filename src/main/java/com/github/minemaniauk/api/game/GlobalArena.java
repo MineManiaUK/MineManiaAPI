@@ -45,6 +45,8 @@ public class GlobalArena extends Arena {
     public GlobalArena(@NotNull ArenaRecord record) {
         super(UUID.fromString(record.identifier), record.serverName, GameType.valueOf(record.gameType));
         this.setGameRoomIdentifier(record.gameRoomIdentifier == null ? null : UUID.fromString(record.gameRoomIdentifier));
+        this.setMinPlayers(record.minPlayers);
+        this.setMaxPlayers(record.maxPlayers);
     }
 
     /**

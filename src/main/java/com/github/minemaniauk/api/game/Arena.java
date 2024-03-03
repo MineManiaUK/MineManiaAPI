@@ -41,6 +41,8 @@ public abstract class Arena implements Savable {
     private final @NotNull String serverName;
     private final @NotNull GameType gameType;
     private @Nullable UUID gameRoomIdentifier;
+    private int minPlayers;
+    private int maxPlayers;
 
     /**
      * Used to create a new instance of an arena.
@@ -127,6 +129,14 @@ public abstract class Arena implements Savable {
                 .getGameRoom(this.getGameRoomIdentifier().get());
     }
 
+    public int getMinPlayers() {
+        return this.minPlayers;
+    }
+
+    public int getMaxPlayers() {
+        return this.maxPlayers;
+    }
+
     /**
      * Used to set the gamer room identifier in this instance of the arena.
      * Please use the method .save() to save these changes.
@@ -136,6 +146,16 @@ public abstract class Arena implements Savable {
      */
     public @NotNull Arena setGameRoomIdentifier(@Nullable UUID gameRoomIdentifier) {
         this.gameRoomIdentifier = gameRoomIdentifier;
+        return this;
+    }
+
+    public @NotNull Arena setMinPlayers(int minPlayers) {
+        this.minPlayers = minPlayers;
+        return this;
+    }
+
+    public @NotNull Arena setMaxPlayers(int maxPlayers) {
+        this.maxPlayers = maxPlayers;
         return this;
     }
 
@@ -173,6 +193,8 @@ public abstract class Arena implements Savable {
         );
 
         record.gameRoomIdentifier = this.gameRoomIdentifier.toString();
+        record.minPlayers = this.minPlayers;
+        record.maxPlayers = this.maxPlayers;
 
         // Update record.
         MineManiaAPI.getInstance().getDatabase()

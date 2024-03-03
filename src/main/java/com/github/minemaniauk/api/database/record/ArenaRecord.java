@@ -40,6 +40,8 @@ public class ArenaRecord extends Record {
     public @NotNull String serverName;
     public @NotNull String gameType;
     public @Nullable String gameRoomIdentifier;
+    public int minPlayers;
+    public int maxPlayers;
 
     public ArenaRecord() {
 
