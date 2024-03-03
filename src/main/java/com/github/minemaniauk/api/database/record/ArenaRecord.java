@@ -20,5 +20,43 @@
 
 package com.github.minemaniauk.api.database.record;
 
-public class ArenaRecord {
+import com.github.minemaniauk.api.game.Arena;
+import com.github.minemaniauk.api.game.GlobalArena;
+import com.github.smuddgge.squishydatabase.record.Field;
+import com.github.smuddgge.squishydatabase.record.Record;
+import com.github.smuddgge.squishydatabase.record.RecordFieldType;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.UUID;
+
+/**
+ * Represents an arena record.
+ */
+public class ArenaRecord extends Record {
+
+    @Field(type = RecordFieldType.PRIMARY)
+    public @NotNull String identifier;
+    public @NotNull String serverName;
+    public @NotNull String gameType;
+    public @Nullable String gameRoomIdentifier;
+
+    public ArenaRecord() {
+
+    }
+
+    public ArenaRecord(@NotNull String identifier, @NotNull String serverName, @NotNull String gameType) {
+        this.identifier = identifier;
+        this.serverName = serverName;
+        this.gameType = gameType;
+    }
+
+    /**
+     * Used to get this record as an arena instance.
+     *
+     * @return The instance of the arena.
+     */
+    public @NotNull Arena asArena() {
+        return new GlobalArena(this);
+    }
 }

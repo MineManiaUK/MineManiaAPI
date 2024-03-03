@@ -35,6 +35,14 @@ import org.jetbrains.annotations.NotNull;
 public interface MineManiaAPI {
 
     /**
+     * Used to get the name of the server
+     * this api connection is being used on.
+     *
+     * @return The name of the server.
+     */
+    @NotNull String getServerName();
+
+    /**
      * Used to get the instance of the kerb client
      * connection.
      *

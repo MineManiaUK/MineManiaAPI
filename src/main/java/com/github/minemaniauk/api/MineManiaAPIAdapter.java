@@ -108,6 +108,13 @@ public class MineManiaAPIAdapter implements MineManiaAPI {
     }
 
     @Override
+    public @NotNull String getServerName() {
+        final String name = this.configuration.getString("server_name", "null");
+        if (name == null) throw new RuntimeException("Server name is null. Please change this in the MineManiaAPI -> config.yaml");
+        return name;
+    }
+
+    @Override
     public @NotNull KerbClient getKerbClient() {
         return this.client;
     }

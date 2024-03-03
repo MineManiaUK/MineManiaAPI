@@ -20,5 +20,17 @@
 
 package com.github.minemaniauk.api.database.collection;
 
-public class ArenaCollection {
+import com.github.minemaniauk.api.database.record.ArenaRecord;
+import com.github.smuddgge.squishydatabase.interfaces.TableAdapter;
+import org.jetbrains.annotations.NotNull;
+
+/**
+ * Represents the arena collection.
+ */
+public class ArenaCollection extends TableAdapter<ArenaRecord> {
+
+    @Override
+    public @NotNull String getName() {
+        return "arenas";
+    }
 }
