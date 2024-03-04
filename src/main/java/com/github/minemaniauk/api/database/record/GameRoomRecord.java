@@ -66,7 +66,7 @@ public class GameRoomRecord extends Record implements Savable {
     public GameRoomRecord(@NotNull UUID ownerUuid, @NotNull GameType gameType) {
         this.uuid = UUID.randomUUID().toString();
         this.owner_uuid = ownerUuid.toString();
-        this.player_uuids = "";
+        this.player_uuids = this.owner_uuid;
         this.game_type = gameType.toString();
         this.is_private = false;
     }
@@ -100,6 +100,7 @@ public class GameRoomRecord extends Record implements Savable {
     public @NotNull List<UUID> getPlayerUuids() {
         List<UUID> list = new ArrayList<>();
         for (String uuid : this.player_uuids.split(",")) {
+            if (uuid.isEmpty()) continue;
             list.add(UUID.fromString(uuid));
         }
         return list;
@@ -115,6 +116,7 @@ public class GameRoomRecord extends Record implements Savable {
     public @NotNull List<MineManiaUser> getPlayers() {
         List<MineManiaUser> list = new ArrayList<>();
         for (String uuid : this.player_uuids.split(",")) {
+            if (uuid.isEmpty()) continue;
             list.add(MineManiaAPI.getInstance().getContract().getUser(UUID.fromString(uuid)));
         }
         return list;
