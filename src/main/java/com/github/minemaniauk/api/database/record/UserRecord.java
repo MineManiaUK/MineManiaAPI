@@ -34,11 +34,11 @@ import java.util.UUID;
  */
 public class UserRecord extends Record {
 
-    private @Field(type = RecordFieldType.PRIMARY) String mc_uuid;
-    private String mc_name;
-    private final String name = "None";
-    private final String email = "e@e.e";
-    private long paws = 0;
+    public @Field(type = RecordFieldType.PRIMARY) String mc_uuid;
+    public String mc_name;
+    public final String name = "None";
+    public final String email = "e@e.e";
+    public long paws = 0;
 
     /**
      * Used to get the users minecraft uuid.

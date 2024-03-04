@@ -42,11 +42,11 @@ import java.util.UUID;
 public class GameRoomRecord extends Record implements Savable {
 
     @Field(type = RecordFieldType.PRIMARY)
-    protected final @NotNull String uuid;
-    protected @NotNull String owner_uuid;
-    protected @NotNull String player_uuids;
-    protected final @NotNull String game_type;
-    protected boolean is_private;
+    public final @NotNull String uuid;
+    public @NotNull String owner_uuid;
+    public @NotNull String player_uuids;
+    public final @NotNull String game_type;
+    public boolean is_private;
 
     /**
      * For database purposes. Game type should not be null!
