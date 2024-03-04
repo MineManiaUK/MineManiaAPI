@@ -165,4 +165,19 @@ public class GameManager {
     public @NotNull List<Arena> getAvailableArenas(@NotNull GameType gameType) {
         return this.getArenas(gameType).stream().filter(Arena::isDeactivated).toList();
     }
+
+    /**
+     * Used to get the first available arena from the database.
+     *
+     * @param gameType The game type to filter.
+     * @param players  The number of players.
+     * @return The available arena. Empty if there is non.
+     */
+    public @NotNull Optional<Arena> getFirstAvailableArena(@NotNull GameType gameType, int players) {
+        List<Arena> list = this.getAvailableArenas(gameType).stream()
+                .filter(arena -> arena.getMinPlayers() <= players && players >= arena.getMaxPlayers())
+                .toList();
+        
+        return list.isEmpty() ? Optional.empty() : Optional.of(list.get(0));
+    }
 }
