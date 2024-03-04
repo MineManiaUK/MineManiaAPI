@@ -32,10 +32,7 @@ import com.github.smuddgge.squishydatabase.Query;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Represents the instance of the global game manager.
@@ -179,5 +176,53 @@ public class GameManager {
                 .toList();
 
         return list.isEmpty() ? Optional.empty() : Optional.of(list.get(0));
+    }
+
+    /**
+     * Used to get the map of arena availability.
+     * <li>Map<"Min-Max" Players, List[Available, Amount]></li>
+     *
+     * @param gameType The type of game arena to filter.
+     * @return The map of arena availability.
+     */
+    public @NotNull Map<String, List<Integer>> getArenaAvailability(@NotNull GameType gameType) {
+        Map<String, List<Integer>> map = new LinkedHashMap<>();
+
+        for (Arena arena : this.getArenas(gameType)) {
+            final String key = arena.getMinPlayers() + "-" + arena.getMaxPlayers();
+
+            if (map.containsKey(key)) {
+                List<Integer> list = map.get(key);
+                map.put(key, List.of(
+                        arena.isActivated() ? list.get(0) : list.get(0) + 1,
+                        list.get(1) + 1
+                ));
+            }
+
+            map.put(key, List.of(
+                    arena.isActivated() ? 0 : 1,
+                    1
+            ));
+        }
+
+        return map;
+    }
+
+    /**
+     * Used to get the arena availability as lore.
+     *
+     * <li>List["Min-Max Players Available/Amount Available Arenas", ...]</li>
+     *
+     * @param gameType The game type to filter.
+     * @return The lore list.
+     */
+    public @NotNull List<String> getArenaAvailabilityAsLore(@NotNull GameType gameType) {
+        Map<String, List<Integer>> map = this.getArenaAvailability(gameType);
+        List<String> lore = new ArrayList<>();
+        
+        for (Map.Entry<String, List<Integer>> entry : map.entrySet()) {
+            lore.add(entry.getKey() + " Players " + entry.getValue().get(0) + "/" + entry.getValue().get(1) + " Available Arenas");
+        }
+        return lore;
     }
 }
