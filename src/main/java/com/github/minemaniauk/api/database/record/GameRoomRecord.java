@@ -89,7 +89,7 @@ public class GameRoomRecord extends Record implements Savable {
      * @return The instance of the owner.
      */
     public @NotNull MineManiaUser getOwner() {
-        return MineManiaAPI.getInstance().getContract().getUser(this.owner_uuid);
+        return MineManiaAPI.getInstance().getContract().getUser(UUID.fromString(this.owner_uuid));
     }
 
     /**
