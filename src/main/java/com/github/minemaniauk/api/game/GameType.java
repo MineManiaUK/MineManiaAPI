@@ -20,13 +20,65 @@
 
 package com.github.minemaniauk.api.game;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Represents all the types of games.
  */
 public enum GameType {
-    TNT_RUN,
-    BED_WARS,
-    SPLEEF,
-    HIDE_AND_SEEK,
-    TOWER_DEFENCE
+    TNT_RUN("Tnt Run", "tnt run", "TNT"),
+    BED_WARS("Bed Wars", "bed wars", "RED_BED"),
+    SPLEEF("Spleef", "spleef", "IRON_SHOVEL"),
+    HIDE_AND_SEEK("Hide and Seek", "hide and seek", "CRAFTING_TABLE"),
+    TOWER_DEFENCE("Tower Defence", "tower defence", "IRON_AXE");
+
+    private final @NotNull String title;
+    private final @NotNull String name;
+    private final @NotNull String materialIdentifier;
+
+    GameType(@NotNull String title, @NotNull String name, @NotNull String materialIdentifier) {
+        this.title = title;
+        this.name = name;
+        this.materialIdentifier = materialIdentifier;
+    }
+
+    /**
+     * Used to convert a material identifier
+     * into the material class.
+     *
+     * @param <T> The material class.
+     */
+    public interface Converter<T> {
+
+        /**
+         * Used to convert a material identifier to a material.
+         *
+         * @param materialIdentifier The material's identifier.
+         * @return The instance of the material.
+         */
+        @NotNull T convert(@NotNull String materialIdentifier);
+    }
+
+    public @NotNull String getTitle() {
+        return this.title;
+    }
+
+    public @NotNull String getName() {
+        return this.name;
+    }
+
+    public @NotNull String getMaterialIdentifier() {
+        return this.materialIdentifier;
+    }
+
+    /**
+     * Used to get the instance of the material.
+     *
+     * @param converter The material converter instance.
+     * @return The instance of the material.
+     * @param <T> The material class.
+     */
+    public @NotNull <T> T getMaterial(@NotNull Converter<T> converter) {
+        return converter.convert(this.materialIdentifier);
+    }
 }
