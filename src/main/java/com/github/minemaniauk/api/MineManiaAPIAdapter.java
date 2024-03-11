@@ -25,6 +25,7 @@ import com.github.kerbity.kerb.packet.event.Event;
 import com.github.kerbity.kerb.packet.event.Priority;
 import com.github.kerbity.kerb.result.CompletableResultSet;
 import com.github.minemaniauk.api.database.collection.ArenaCollection;
+import com.github.minemaniauk.api.database.collection.GameRoomInviteCollection;
 import com.github.minemaniauk.api.database.collection.GameRoomCollection;
 import com.github.minemaniauk.api.database.collection.UserCollection;
 import com.github.minemaniauk.api.game.GameManager;
@@ -88,6 +89,7 @@ public class MineManiaAPIAdapter implements MineManiaAPI {
 
             // Set up the tables.
             this.database.createTable(new UserCollection());
+            this.database.createTable(new GameRoomInviteCollection());
             this.database.createTable(new GameRoomCollection());
             this.database.createTable(new ArenaCollection());
 

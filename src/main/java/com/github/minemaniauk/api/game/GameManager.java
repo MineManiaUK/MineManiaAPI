@@ -25,9 +25,13 @@ import com.github.kerbity.kerb.packet.event.Event;
 import com.github.kerbity.kerb.packet.event.Priority;
 import com.github.minemaniauk.api.MineManiaAPI;
 import com.github.minemaniauk.api.database.collection.ArenaCollection;
+import com.github.minemaniauk.api.database.collection.GameRoomInviteCollection;
 import com.github.minemaniauk.api.database.record.ArenaRecord;
+import com.github.minemaniauk.api.database.record.GameRoomInviteRecord;
+import com.github.minemaniauk.api.database.record.GameRoomRecord;
 import com.github.minemaniauk.api.kerb.event.game.GameArenaActivate;
 import com.github.minemaniauk.api.kerb.event.game.GameArenaDeactivate;
+import com.github.minemaniauk.api.kerb.event.gameroom.GameRoomInviteEvent;
 import com.github.smuddgge.squishydatabase.Query;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -219,10 +223,103 @@ public class GameManager {
     public @NotNull List<String> getArenaAvailabilityAsLore(@NotNull GameType gameType) {
         Map<String, List<Integer>> map = this.getArenaAvailability(gameType);
         List<String> lore = new ArrayList<>();
-        
+
         for (Map.Entry<String, List<Integer>> entry : map.entrySet()) {
             lore.add(entry.getKey() + " Players " + entry.getValue().get(0) + "/" + entry.getValue().get(1) + " Available Arenas");
         }
         return lore;
+    }
+
+    /**
+     * Used to get an invitation from the database.
+     *
+     * @param uuid The uuid of the invite.
+     * @return The optional invite.
+     */
+    public @NotNull Optional<GameRoomInviteRecord> getInvite(@NotNull UUID uuid) {
+        return Optional.ofNullable(this.api.getDatabase()
+                .getTable(GameRoomInviteCollection.class)
+                .getFirstRecord(new Query().match("uuid", uuid.toString()))
+        );
+    }
+
+    /**
+     * Used to get an invitation from the database.
+     *
+     * @param toPlayerUuid The player it is to.
+     * @param gameRoomUuid The game room it is from
+     * @return The instance of the invite record.
+     */
+    public @NotNull Optional<GameRoomInviteRecord> getInvite(@NotNull UUID toPlayerUuid, @NotNull UUID gameRoomUuid) {
+        return Optional.ofNullable(this.api.getDatabase()
+                .getTable(GameRoomInviteCollection.class)
+                .getFirstRecord(new Query()
+                        .match("toPlayerUuid", toPlayerUuid.toString())
+                        .match("gameRoomUuid", gameRoomUuid.toString())
+                )
+        );
+    }
+
+    /**
+     * Used to get the list of invites sent to this player.
+     *
+     * @param toPlayerUuid The player that has been sent the invites.
+     * @return The list of invites.
+     */
+    public @NotNull List<GameRoomInviteRecord> getInviteList(@NotNull UUID toPlayerUuid) {
+        return this.api.getDatabase()
+                .getTable(GameRoomInviteCollection.class)
+                .getRecordList(new Query()
+                        .match("toPlayerUuid", toPlayerUuid.toString())
+                );
+    }
+
+    /**
+     * Used to get the invite list for a game room.
+     *
+     * @param gameRoomUuid The game room uuid.
+     * @return The list of game room invites.
+     */
+    public @NotNull List<GameRoomInviteRecord> getInviteListForGameRoom(@NotNull UUID gameRoomUuid) {
+        return this.api.getDatabase()
+                .getTable(GameRoomInviteCollection.class)
+                .getRecordList(new Query()
+                        .match("gameRoomUuid", gameRoomUuid)
+                );
+    }
+
+    /**
+     * Used to check if a player has a pending invite to a game room.
+     *
+     * @param playerSentToUuid The instance of the player uuid
+     *                         the invite was sent to.
+     * @param gameRoomUuid     The instance of the game room uuid.
+     * @return True if they have been invited
+     */
+    public boolean hasBeenInvited(@NotNull UUID playerSentToUuid, @NotNull UUID gameRoomUuid) {
+        return this.getInvite(playerSentToUuid, gameRoomUuid).isPresent();
+    }
+
+    /**
+     * Used to send an invitation to a player from a game room.
+     *
+     * @param toPlayerUuid The player it should be sent to.
+     * @param gameRoomRecord The game room record it is being sent from.
+     */
+    public void sendInvite(@NotNull UUID toPlayerUuid, @NotNull GameRoomRecord gameRoomRecord) {
+
+        // Create the invite record.
+        GameRoomInviteRecord invite = new GameRoomInviteRecord();
+        invite.uuid = UUID.randomUUID().toString();
+        invite.toPlayerUuid = toPlayerUuid.toString();
+        invite.gameRoomUuid = gameRoomRecord.getUuid().toString();
+
+        // Add to the database.
+        this.api.getDatabase()
+                .getTable(GameRoomInviteCollection.class)
+                .insertRecord(invite);
+
+        // Broadcast the event.
+        this.api.getKerbClient().callEvent(new GameRoomInviteEvent(gameRoomRecord, invite));
     }
 }
