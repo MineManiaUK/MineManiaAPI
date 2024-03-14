@@ -25,7 +25,6 @@ import com.github.minemaniauk.api.MineManiaAPI;
 import com.github.minemaniauk.api.database.collection.GameRoomCollection;
 import com.github.minemaniauk.api.database.record.GameRoomRecord;
 import com.github.minemaniauk.api.user.MineManiaUser;
-import com.github.smuddgge.squishyconfiguration.interfaces.Configuration;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;

@@ -21,8 +21,8 @@
 package com.github.minemaniauk.api.database.record;
 
 import com.github.minemaniauk.api.MineManiaAPIAdapter;
-import com.github.minemaniauk.api.database.collection.GameRoomInviteCollection;
 import com.github.minemaniauk.api.database.collection.GameRoomCollection;
+import com.github.minemaniauk.api.database.collection.GameRoomInviteCollection;
 import com.github.smuddgge.squishydatabase.record.Field;
 import com.github.smuddgge.squishydatabase.record.Record;
 import com.github.smuddgge.squishydatabase.record.RecordFieldType;

@@ -25,8 +25,8 @@ import com.github.kerbity.kerb.packet.event.Event;
 import com.github.kerbity.kerb.packet.event.Priority;
 import com.github.kerbity.kerb.result.CompletableResultSet;
 import com.github.minemaniauk.api.database.collection.ArenaCollection;
-import com.github.minemaniauk.api.database.collection.GameRoomInviteCollection;
 import com.github.minemaniauk.api.database.collection.GameRoomCollection;
+import com.github.minemaniauk.api.database.collection.GameRoomInviteCollection;
 import com.github.minemaniauk.api.database.collection.UserCollection;
 import com.github.minemaniauk.api.game.GameManager;
 import com.github.smuddgge.squishyconfiguration.interfaces.Configuration;
@@ -114,7 +114,8 @@ public class MineManiaAPIAdapter implements MineManiaAPI {
     @Override
     public @NotNull String getServerName() {
         final String name = this.configuration.getString("server_name", "null");
-        if (name == null) throw new RuntimeException("Server name is null. Please change this in the MineManiaAPI -> config.yaml");
+        if (name == null)
+            throw new RuntimeException("Server name is null. Please change this in the MineManiaAPI -> config.yaml");
         return name;
     }
 

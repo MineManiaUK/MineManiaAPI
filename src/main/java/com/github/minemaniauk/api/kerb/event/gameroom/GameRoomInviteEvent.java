@@ -37,7 +37,7 @@ public class GameRoomInviteEvent extends Event implements GameRoomEvent {
     /**
      * Used to create a new game room invite event.
      *
-     * @param gameRoom The instance of the game room invited to.
+     * @param gameRoom       The instance of the game room invited to.
      * @param gameRoomInvite The instance of the game room invite.
      */
     public GameRoomInviteEvent(@NotNull GameRoomRecord gameRoom, @NotNull GameRoomInviteRecord gameRoomInvite) {

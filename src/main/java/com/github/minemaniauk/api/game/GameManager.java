@@ -303,7 +303,7 @@ public class GameManager {
     /**
      * Used to send an invitation to a player from a game room.
      *
-     * @param toPlayerUuid The player it should be sent to.
+     * @param toPlayerUuid   The player it should be sent to.
      * @param gameRoomRecord The game room record it is being sent from.
      */
     public void sendInvite(@NotNull UUID toPlayerUuid, @NotNull GameRoomRecord gameRoomRecord) {

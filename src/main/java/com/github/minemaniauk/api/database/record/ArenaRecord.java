@@ -28,8 +28,6 @@ import com.github.smuddgge.squishydatabase.record.RecordFieldType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.UUID;
-
 /**
  * Represents an arena record.
  */

@@ -75,8 +75,8 @@ public enum GameType {
      * Used to get the instance of the material.
      *
      * @param converter The material converter instance.
+     * @param <T>       The material class.
      * @return The instance of the material.
-     * @param <T> The material class.
      */
     public @NotNull <T> T getMaterial(@NotNull Converter<T> converter) {
         return converter.convert(this.materialIdentifier);

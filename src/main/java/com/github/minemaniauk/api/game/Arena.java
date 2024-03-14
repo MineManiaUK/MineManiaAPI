@@ -49,7 +49,7 @@ public abstract class Arena implements Savable {
      *
      * @param identifier The arena's unique identifier.
      * @param serverName The servers name.
-     * @param gameType The arena's game type.
+     * @param gameType   The arena's game type.
      */
     public Arena(@NotNull UUID identifier, @NotNull String serverName, @NotNull GameType gameType) {
         this.identifier = identifier;
