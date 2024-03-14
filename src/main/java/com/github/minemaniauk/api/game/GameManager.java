@@ -217,7 +217,7 @@ public class GameManager {
      */
     public @NotNull Optional<Arena> getFirstAvailableArena(@NotNull GameType gameType, int players) {
         List<Arena> list = this.getAvailableArenas(gameType).stream()
-                .filter(arena -> arena.getMinPlayers() <= players && players >= arena.getMaxPlayers())
+                .filter(arena -> arena.getMinPlayers() <= players && players <= arena.getMaxPlayers())
                 .toList();
 
         return list.isEmpty() ? Optional.empty() : Optional.of(list.get(0));
