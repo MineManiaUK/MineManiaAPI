@@ -32,12 +32,13 @@ import java.util.UUID;
  * Represents a session manager.
  * Contains active sessions.
  *
+ * @param <T> The type of sessions this class will be managing.
  * @param <A> The type of arena the sessions
  *            will be connected to.
  */
-public class SessionManager<A extends Arena> {
+public class SessionManager<T extends Session<A>, A extends Arena> {
 
-    private final @NotNull List<Session<A>> sessionList;
+    private final @NotNull List<T> sessionList;
 
     /**
      * Used to create a new session manager instance.
@@ -52,12 +53,21 @@ public class SessionManager<A extends Arena> {
      * @param arenaIdentifier The arena identifier to look for.
      * @return The optional session instance.
      */
-    public @NotNull Optional<Session<A>> getSession(@NotNull UUID arenaIdentifier) {
-        for (Session<A> session : this.sessionList) {
+    public @NotNull Optional<T> getSession(@NotNull UUID arenaIdentifier) {
+        for (T session : this.sessionList) {
             if (session.getArenaIdentifier().equals(arenaIdentifier)) return Optional.of(session);
         }
 
         return Optional.empty();
+    }
+
+    /**
+     * Used to get the instance of the session list.
+     *
+     * @return The instance of the session list.
+     */
+    public @NotNull List<T> getSessionList() {
+        return this.sessionList;
     }
 
     /**
@@ -66,7 +76,7 @@ public class SessionManager<A extends Arena> {
      * @param session The session to register.
      * @return This instance.
      */
-    public @NotNull SessionManager<A> registerSession(@NotNull Session<A> session) {
+    public @NotNull SessionManager<T, A> registerSession(@NotNull T session) {
         this.sessionList.add(session);
         return this;
     }
@@ -77,7 +87,7 @@ public class SessionManager<A extends Arena> {
      * @param session The instance of the session.
      * @return This instance.
      */
-    public @NotNull SessionManager<A> unregisterSession(@NotNull Session<A> session) {
+    public @NotNull SessionManager<T, A> unregisterSession(@NotNull T session) {
         this.sessionList.remove(session);
         return this;
     }
@@ -88,16 +98,29 @@ public class SessionManager<A extends Arena> {
      * @param arenaIdentifier The instance of the arena identifier.
      * @return This instance.
      */
-    public @NotNull SessionManager<A> unregisterSession(@NotNull UUID arenaIdentifier) {
-        List<Session<A>> toRemove = new ArrayList<>();
+    public @NotNull SessionManager<T, A> unregisterSession(@NotNull UUID arenaIdentifier) {
+        List<T> toRemove = new ArrayList<>();
 
-        for (Session<A> session : this.sessionList) {
+        for (T session : this.sessionList) {
             if (session.getArenaIdentifier().equals(arenaIdentifier)) {
                 toRemove.add(session);
             }
         }
 
         this.sessionList.removeAll(toRemove);
+        return this;
+    }
+
+    /**
+     * Used to stop all the session components in this manager.
+     *
+     * @return This instance.
+     */
+    public @NotNull SessionManager<T, A> stopAllSessionComponents() {
+        for (T session : this.sessionList) {
+            session.stopComponents();
+        }
+
         return this;
     }
 }
