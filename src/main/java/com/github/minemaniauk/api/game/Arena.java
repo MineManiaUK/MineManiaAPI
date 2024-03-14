@@ -192,7 +192,7 @@ public abstract class Arena implements Savable {
                 this.gameType.name()
         );
 
-        record.gameRoomIdentifier = this.gameRoomIdentifier.toString();
+        if (this.gameRoomIdentifier != null) record.gameRoomIdentifier = this.gameRoomIdentifier.toString();
         record.minPlayers = this.minPlayers;
         record.maxPlayers = this.maxPlayers;
 
