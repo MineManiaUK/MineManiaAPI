@@ -118,6 +118,25 @@ public class GameManager {
     }
 
     /**
+     * Used to unregister all local arenas.
+     *
+     * @return This instance.
+     */
+    public @NotNull GameManager unregisterLocalArenas() {
+        List<UUID> identifiersToUnregister = new ArrayList<>();
+        for (Arena arena : new ArrayList<>(this.localArenas)) {
+            identifiersToUnregister.add(arena.getIdentifier());
+        }
+
+        // Loop though identifiers.
+        for (UUID identifier : identifiersToUnregister) {
+            this.unregisterArena(identifier);
+        }
+
+        return this;
+    }
+
+    /**
      * Used to get the list of registered arenas in the database.
      *
      * @param gameType The game type to filter.
@@ -155,6 +174,28 @@ public class GameManager {
         // Check if it returned null.
         if (record == null) return Optional.empty();
         return Optional.of(record.asArena());
+    }
+
+    /**
+     * Used to get the instance of the local arenas.
+     *
+     * @return The instance of the local arenas.
+     */
+    public @NotNull List<Arena> getLocalArenas() {
+        return this.localArenas;
+    }
+
+    /**
+     * Used to get a specific local arena given the identifier.
+     *
+     * @param identifier The arena's identifier.
+     * @return The optional arena.
+     */
+    public @NotNull Optional<Arena> getLocalArena(@NotNull UUID identifier) {
+        for (Arena arena : this.localArenas) {
+            if (arena.getIdentifier().equals(identifier)) return Optional.of(arena);
+        }
+        return Optional.empty();
     }
 
     /**
