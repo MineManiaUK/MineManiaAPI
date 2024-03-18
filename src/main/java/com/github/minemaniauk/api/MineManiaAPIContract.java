@@ -23,10 +23,7 @@ package com.github.minemaniauk.api;
 import com.github.kerbity.kerb.client.listener.EventListener;
 import com.github.kerbity.kerb.packet.event.Event;
 import com.github.minemaniauk.api.kerb.event.player.PlayerChatEvent;
-import com.github.minemaniauk.api.kerb.event.useraction.UserActionHasPermissionListEvent;
-import com.github.minemaniauk.api.kerb.event.useraction.UserActionIsOnlineEvent;
-import com.github.minemaniauk.api.kerb.event.useraction.UserActionIsVanishedEvent;
-import com.github.minemaniauk.api.kerb.event.useraction.UserActionMessageEvent;
+import com.github.minemaniauk.api.kerb.event.useraction.*;
 import com.github.minemaniauk.api.user.MineManiaUser;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -46,6 +43,7 @@ public interface MineManiaAPIContract extends EventListener<Event> {
         if (event instanceof UserActionIsOnlineEvent userEvent) return this.onIsOnline(userEvent);
         if (event instanceof UserActionIsVanishedEvent userEvent) return this.onIsVanished(userEvent);
         if (event instanceof UserActionMessageEvent userEvent) return this.onMessage(userEvent);
+        if (event instanceof UserActionTeleportEvent teleportEvent) return this.onTeleport(teleportEvent);
         if (event instanceof PlayerChatEvent playerEvent) return this.onChatEvent(playerEvent);
         return event;
     }
@@ -97,6 +95,14 @@ public interface MineManiaAPIContract extends EventListener<Event> {
      * @return The event result.
      */
     @Nullable UserActionMessageEvent onMessage(@NotNull UserActionMessageEvent event);
+
+    /**
+     * Called when a server wants a player to be teleported to a server.
+     *
+     * @param event The instance of the event.
+     * @return The instance of the event.
+     */
+    @Nullable UserActionTeleportEvent onTeleport(@NotNull UserActionTeleportEvent event);
 
     /**
      * Called when the server should broadcast a message to all the players.

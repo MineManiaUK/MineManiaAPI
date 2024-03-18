@@ -22,10 +22,8 @@ package com.github.minemaniauk.api.user;
 
 import com.github.kerbity.kerb.result.CompletableResultSet;
 import com.github.minemaniauk.api.MineManiaAPI;
-import com.github.minemaniauk.api.kerb.event.useraction.UserActionHasPermissionListEvent;
-import com.github.minemaniauk.api.kerb.event.useraction.UserActionIsOnlineEvent;
-import com.github.minemaniauk.api.kerb.event.useraction.UserActionIsVanishedEvent;
-import com.github.minemaniauk.api.kerb.event.useraction.UserActionMessageEvent;
+import com.github.minemaniauk.api.MineManiaLocation;
+import com.github.minemaniauk.api.kerb.event.useraction.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -196,6 +194,26 @@ public class MineManiaUserActionSet {
         new Thread(() -> result.addResult(
                 MineManiaAPI.getInstance()
                         .callEvent(new UserActionHasPermissionListEvent(this.user, permissionList))
+                        .waitForComplete()
+                        .containsSettable(true)
+        )).start();
+
+        return result;
+    }
+
+    /**
+     * Used to teleport a player to a world location in a server.
+     *
+     * @param location The location to teleport to.
+     * @return The completable result.
+     */
+    public @NotNull CompletableResultSet<Boolean> teleport(@NotNull MineManiaLocation location) {
+        CompletableResultSet<Boolean> result = new CompletableResultSet<>(1);
+
+        // Check if the event contains a true value, they have the permission.
+        new Thread(() -> result.addResult(
+                MineManiaAPI.getInstance()
+                        .callEvent(new UserActionTeleportEvent(this.user, location))
                         .waitForComplete()
                         .containsSettable(true)
         )).start();
