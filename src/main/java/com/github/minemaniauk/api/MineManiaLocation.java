@@ -37,10 +37,10 @@ public class MineManiaLocation {
      * Used to create a new instance of a location.
      *
      * @param serverName The name of the server the location is in.
-     * @param worldName The name of the world the location is in.
-     * @param x The x cord.
-     * @param y The y cord.
-     * @param z The z cord.
+     * @param worldName  The name of the world the location is in.
+     * @param x          The x cord.
+     * @param y          The y cord.
+     * @param z          The z cord.
      */
     public MineManiaLocation(@NotNull String serverName, @NotNull String worldName, double x, double y, double z) {
         this.serverName = serverName;
@@ -98,8 +98,8 @@ public class MineManiaLocation {
      * Used to get the instance of the location type.
      *
      * @param converter The instance of the converter.
+     * @param <T>       The type of location.
      * @return The instance of the location type.
-     * @param <T> The type of location.
      */
     public @NotNull <T> T getLocation(@NotNull LocationConverter<T> converter) {
         return converter.getLocationType(this);

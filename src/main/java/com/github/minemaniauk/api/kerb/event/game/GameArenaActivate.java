@@ -36,14 +36,16 @@ import java.util.UUID;
 public class GameArenaActivate extends Event implements GameEvent {
 
     private final @NotNull UUID arenaIdentifier;
+    private final @NotNull UUID gameRoomIdentifier;
 
     /**
      * Used to create a game arena activate event.
      *
      * @param arenaIdentifier The arena identifier to activate.
      */
-    public GameArenaActivate(@NotNull UUID arenaIdentifier) {
+    public GameArenaActivate(@NotNull UUID arenaIdentifier, @NotNull UUID gameRoomIdentifier) {
         this.arenaIdentifier = arenaIdentifier;
+        this.gameRoomIdentifier = gameRoomIdentifier;
     }
 
     /**
@@ -53,5 +55,14 @@ public class GameArenaActivate extends Event implements GameEvent {
      */
     public @NotNull UUID getArenaIdentifier() {
         return this.arenaIdentifier;
+    }
+
+    /**
+     * Used to get the game room identifier.
+     *
+     * @return The game room identifier.
+     */
+    public @NotNull UUID getGameRoomIdentifier() {
+        return this.gameRoomIdentifier;
     }
 }

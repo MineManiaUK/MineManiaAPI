@@ -62,6 +62,7 @@ public class GameManager {
             public @Nullable Event onEvent(GameArenaActivate event) {
                 for (Arena arena : GameManager.this.localArenas) {
                     if (!arena.getIdentifier().equals(event.getArenaIdentifier())) continue;
+                    arena.setGameRoomIdentifier(event.getGameRoomIdentifier());
                     arena.activate();
                 }
                 return event;
@@ -74,6 +75,7 @@ public class GameManager {
             public @Nullable Event onEvent(GameArenaDeactivate event) {
                 for (Arena arena : GameManager.this.localArenas) {
                     if (!arena.getIdentifier().equals(event.getArenaIdentifier())) continue;
+                    arena.setGameRoomIdentifier(null);
                     arena.deactivate();
                 }
                 return event;

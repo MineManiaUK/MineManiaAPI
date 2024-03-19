@@ -64,7 +64,7 @@ public class GlobalArena extends Arena {
         if (!client.isConnected() || !client.isValid()) return;
 
         // Call the event.
-        client.callEvent(new GameArenaActivate(this.getIdentifier()));
+        client.callEvent(new GameArenaActivate(this.getIdentifier(), this.getGameRoomIdentifier().orElseThrow()));
     }
 
     /**
