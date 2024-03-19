@@ -36,7 +36,7 @@ public class Session<A extends Arena> {
 
     private final @NotNull UUID arenaIdentifier;
     private final @NotNull ArenaFactory<A> arenaFactory;
-    private final @NotNull List<SessionComponent<A>> componentList;
+    private final @NotNull List<SessionComponent<?>> componentList;
 
     /**
      * Used to create a new session instance.
@@ -99,7 +99,7 @@ public class Session<A extends Arena> {
      * @param component The component to register.
      * @return This instance.
      */
-    public @NotNull Session<A> registerComponent(@NotNull SessionComponent<A> component) {
+    public @NotNull Session<A> registerComponent(@NotNull SessionComponent component) {
         this.componentList.add(component);
         return this;
     }
@@ -110,7 +110,7 @@ public class Session<A extends Arena> {
      * @param clazz The type of class to unregister.
      * @return This instance.
      */
-    public @NotNull Session<A> unregisterComponent(@NotNull Class<SessionComponent<A>> clazz) {
+    public @NotNull Session<A> unregisterComponent(@NotNull Class<SessionComponent> clazz) {
         this.componentList.removeIf(item -> item.getClass().isInstance(clazz));
         return this;
     }
@@ -123,11 +123,11 @@ public class Session<A extends Arena> {
      * @return The instance of the class.
      * @throws RuntimeException If the class doesn't exist.
      */
-    public @NotNull <T extends SessionComponent<A>> T getComponent(@NotNull Class<T> clazz) {
+    public @NotNull <T> T getComponent(@NotNull Class<T> clazz) {
 
         // Loop though components.
-        for (SessionComponent<A> component : this.componentList) {
-            if (component.getClass().isInstance(clazz)) return (T) component;
+        for (SessionComponent<?> component : this.componentList) {
+            if (clazz.isInstance(component)) return (T) component;
         }
 
         throw new RuntimeException("Tried to get component from session but it doesnt exist. " + clazz.getName());
@@ -139,7 +139,7 @@ public class Session<A extends Arena> {
      * @return This instance.
      */
     public @NotNull Session<A> startComponents() {
-        for (SessionComponent<A> component : this.componentList) {
+        for (SessionComponent component : this.componentList) {
             component.start();
         }
 
@@ -152,7 +152,7 @@ public class Session<A extends Arena> {
      * @return This instance.
      */
     public @NotNull Session<A> stopComponents() {
-        for (SessionComponent<A> component : this.componentList) {
+        for (SessionComponent component : this.componentList) {
             component.stop();
         }
 
