@@ -25,8 +25,11 @@ import com.github.minemaniauk.api.MineManiaAPI;
 import com.github.minemaniauk.api.database.record.ArenaRecord;
 import com.github.minemaniauk.api.kerb.event.game.GameArenaActivate;
 import com.github.minemaniauk.api.kerb.event.game.GameArenaDeactivate;
+import com.github.smuddgge.squishyconfiguration.memory.MemoryConfigurationSection;
+import com.google.gson.Gson;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 /**
@@ -47,6 +50,13 @@ public class GlobalArena extends Arena {
         this.setGameRoomIdentifier(record.gameRoomIdentifier == null ? null : UUID.fromString(record.gameRoomIdentifier));
         this.setMinPlayers(record.minPlayers);
         this.setMaxPlayers(record.maxPlayers);
+
+        // Check if there is a display item section.
+        if (record.displayItemSection != null) {
+            this.setDisplayItemSection(new MemoryConfigurationSection(
+                    new Gson().fromJson(record.displayItemSection, HashMap.class)
+            ));
+        }
     }
 
     /**

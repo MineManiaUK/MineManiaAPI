@@ -26,6 +26,8 @@ import com.github.minemaniauk.api.database.collection.GameRoomCollection;
 import com.github.minemaniauk.api.database.record.ArenaRecord;
 import com.github.minemaniauk.api.database.record.GameRoomRecord;
 import com.github.minemaniauk.api.indicator.Savable;
+import com.github.smuddgge.squishyconfiguration.interfaces.ConfigurationSection;
+import com.google.gson.Gson;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -43,6 +45,7 @@ public abstract class Arena implements Savable {
     private @Nullable UUID gameRoomIdentifier;
     private int minPlayers;
     private int maxPlayers;
+    private @Nullable ConfigurationSection displayItem;
 
     /**
      * Used to create a new instance of an arena.
@@ -138,6 +141,15 @@ public abstract class Arena implements Savable {
     }
 
     /**
+     * Used to get the information about the display item.
+     *
+     * @return The infomation about the display item.
+     */
+    public @Nullable ConfigurationSection getDisplayItemSection() {
+        return this.displayItem;
+    }
+
+    /**
      * Used to set the gamer room identifier in this instance of the arena.
      * Please use the method .save() to save these changes.
      *
@@ -156,6 +168,17 @@ public abstract class Arena implements Savable {
 
     public @NotNull Arena setMaxPlayers(int maxPlayers) {
         this.maxPlayers = maxPlayers;
+        return this;
+    }
+
+    /**
+     * Used to set the display item infomation.
+     *
+     * @param section The instance of the configuration section.
+     * @return This instance.
+     */
+    public @NotNull Arena setDisplayItemSection(@NotNull ConfigurationSection section) {
+        this.displayItem = section;
         return this;
     }
 
@@ -195,6 +218,7 @@ public abstract class Arena implements Savable {
         if (this.gameRoomIdentifier != null) record.gameRoomIdentifier = this.gameRoomIdentifier.toString();
         record.minPlayers = this.minPlayers;
         record.maxPlayers = this.maxPlayers;
+        if (this.displayItem != null) record.displayItemSection = new Gson().toJson(this.displayItem.getMap());
 
         // Update record.
         MineManiaAPI.getInstance().getDatabase()
