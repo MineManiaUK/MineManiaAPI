@@ -41,6 +41,7 @@ public class ArenaRecord extends Record {
     public int minPlayers;
     public int maxPlayers;
     public @Nullable String displayItemSection;
+    public @Nullable String mapName;
 
     public ArenaRecord() {
 

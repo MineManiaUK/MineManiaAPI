@@ -46,6 +46,7 @@ public abstract class Arena implements Savable {
     private int minPlayers;
     private int maxPlayers;
     private @Nullable ConfigurationSection displayItem;
+    private @Nullable String mapName;
 
     /**
      * Used to create a new instance of an arena.
@@ -150,6 +151,15 @@ public abstract class Arena implements Savable {
     }
 
     /**
+     * Used to get the name of the map.
+     *
+     * @return The name of the map.
+     */
+    public @Nullable String getMapName() {
+        return this.mapName;
+    }
+
+    /**
      * Used to set the gamer room identifier in this instance of the arena.
      * Please use the method .save() to save these changes.
      *
@@ -179,6 +189,17 @@ public abstract class Arena implements Savable {
      */
     public @NotNull Arena setDisplayItemSection(@NotNull ConfigurationSection section) {
         this.displayItem = section;
+        return this;
+    }
+
+    /**
+     * Used to set the name of the map.
+     *
+     * @param mapName The map's name.
+     * @return This instance.
+     */
+    public @NotNull Arena setMapName(@NotNull String mapName) {
+        this.mapName = mapName;
         return this;
     }
 
@@ -219,6 +240,7 @@ public abstract class Arena implements Savable {
         record.minPlayers = this.minPlayers;
         record.maxPlayers = this.maxPlayers;
         if (this.displayItem != null) record.displayItemSection = new Gson().toJson(this.displayItem.getMap());
+        record.mapName = this.mapName;
 
         // Update record.
         MineManiaAPI.getInstance().getDatabase()
