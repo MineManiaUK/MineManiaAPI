@@ -50,6 +50,7 @@ public class GlobalArena extends Arena {
         this.setGameRoomIdentifier(record.gameRoomIdentifier == null ? null : UUID.fromString(record.gameRoomIdentifier));
         this.setMinPlayers(record.minPlayers);
         this.setMaxPlayers(record.maxPlayers);
+        if (record.mapName != null) this.setMapName(record.mapName);
 
         // Check if there is a display item section.
         if (record.displayItemSection != null) {
