@@ -78,7 +78,7 @@ public class MineManiaAPIAdapter implements MineManiaAPI {
                     Duration.ofSeconds(10),
                     -1
             );
-            this.client.connect();
+            if (!this.client.connect()) this.client.checkAndAttemptToReconnect();
             this.client.registerListener(Priority.LOW, contract);
 
             //  Create the instance of the database.
