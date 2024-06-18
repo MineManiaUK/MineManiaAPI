@@ -57,7 +57,7 @@
         <dependency>
             <groupId>com.github.Kerbity</groupId>
             <artifactId>Kerb</artifactId>
-            <version>1.9.1</version>
+            <version>1.9.3</version>
         </dependency>
 
         <!-- Database Library -->
