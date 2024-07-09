@@ -210,13 +210,22 @@ public class MineManiaUserActionSet {
     public @NotNull CompletableResultSet<Boolean> teleport(@NotNull MineManiaLocation location) {
         CompletableResultSet<Boolean> result = new CompletableResultSet<>(1);
 
-        // Check if the event contains a true value, they have the permission.
-        new Thread(() -> result.addResult(
-                MineManiaAPI.getInstance()
-                        .callEvent(new UserActionTeleportEvent(this.user, location))
-                        .waitForComplete()
-                        .containsSettable(true)
-        )).start();
+        new Thread(() -> {
+
+            // Check if it's been completed.
+            boolean completed = MineManiaAPI.getInstance()
+                    .callEvent(new UserActionTeleportEvent(this.user, location))
+                    .waitForComplete()
+                    .containsSettable(true);
+
+            if (completed) {
+                result.addResult(true);
+            }
+
+            // Try again.
+            this.teleport(location);
+        });
+
 
         return result;
     }

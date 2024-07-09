@@ -72,7 +72,9 @@ public class GlobalArena extends Arena {
         final KerbClient client = MineManiaAPI.getInstance().getKerbClient();
 
         // Check the client is valid.
-        if (!client.isConnected() || !client.isValid()) return;
+        if (!client.isConnected() || !client.isValid()) {
+            throw new RuntimeException("Kerb client was not connected when a game was activated!");
+        }
 
         // Call the event.
         client.callEvent(new GameArenaActivate(this.getIdentifier(), this.getGameRoomIdentifier().orElseThrow()));
