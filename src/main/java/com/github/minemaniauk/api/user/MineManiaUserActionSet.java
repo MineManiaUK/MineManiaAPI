@@ -224,7 +224,7 @@ public class MineManiaUserActionSet {
 
             // Try again.
             this.teleport(location);
-        });
+        }).start();
 
 
         return result;
