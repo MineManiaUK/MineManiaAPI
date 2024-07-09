@@ -216,7 +216,7 @@ public class MineManiaUserActionSet {
             boolean completed = MineManiaAPI.getInstance()
                     .callEvent(new UserActionTeleportEvent(this.user, location))
                     .waitForComplete()
-                    .containsSettable(true);
+                    .containsCompleted();
 
             if (completed) {
                 result.addResult(true);
