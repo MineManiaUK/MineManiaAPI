@@ -220,6 +220,7 @@ public class MineManiaUserActionSet {
 
             if (completed) {
                 result.addResult(true);
+                return;
             }
 
             // Try again.
