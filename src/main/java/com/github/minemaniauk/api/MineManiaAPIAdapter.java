@@ -29,11 +29,11 @@ import com.github.minemaniauk.api.database.collection.GameRoomCollection;
 import com.github.minemaniauk.api.database.collection.GameRoomInviteCollection;
 import com.github.minemaniauk.api.database.collection.UserCollection;
 import com.github.minemaniauk.api.game.GameManager;
-import com.github.smuddgge.squishyconfiguration.interfaces.Configuration;
 import com.github.smuddgge.squishydatabase.DatabaseCredentials;
 import com.github.smuddgge.squishydatabase.DatabaseFactory;
 import com.github.smuddgge.squishydatabase.console.Console;
 import com.github.smuddgge.squishydatabase.interfaces.Database;
+import com.github.squishylib.configuration.Configuration;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

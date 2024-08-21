@@ -24,8 +24,8 @@ import com.github.kerbity.kerb.client.KerbClient;
 import com.github.kerbity.kerb.packet.event.Event;
 import com.github.kerbity.kerb.result.CompletableResultSet;
 import com.github.minemaniauk.api.game.GameManager;
-import com.github.smuddgge.squishyconfiguration.interfaces.Configuration;
 import com.github.smuddgge.squishydatabase.interfaces.Database;
+import com.github.squishylib.configuration.Configuration;
 import org.jetbrains.annotations.NotNull;
 
 /**

@@ -25,7 +25,7 @@ import com.github.minemaniauk.api.MineManiaAPI;
 import com.github.minemaniauk.api.database.record.ArenaRecord;
 import com.github.minemaniauk.api.kerb.event.game.GameArenaActivate;
 import com.github.minemaniauk.api.kerb.event.game.GameArenaDeactivate;
-import com.github.smuddgge.squishyconfiguration.memory.MemoryConfigurationSection;
+import com.github.squishylib.configuration.implementation.MemoryConfigurationSection;
 import com.google.gson.Gson;
 import org.jetbrains.annotations.NotNull;
 

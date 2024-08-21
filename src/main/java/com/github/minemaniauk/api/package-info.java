@@ -20,7 +20,7 @@
 
 /**
  * To create an instance of the api you can use the method
- * {@link com.github.minemaniauk.api.MineManiaAPI#createAndSet(com.github.smuddgge.squishyconfiguration.interfaces.Configuration, com.github.minemaniauk.api.MineManiaAPIContract)}
+ * {@link com.github.minemaniauk.api.MineManiaAPI#createAndSet(com.github.squishylib.configuration.Configuration, com.github.minemaniauk.api.MineManiaAPIContract)}
  * after you can then use the {@link com.github.minemaniauk.api.MineManiaAPI#getInstance()}
  * to get the instance of the api.
  */

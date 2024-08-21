@@ -26,7 +26,7 @@ import com.github.minemaniauk.api.database.collection.GameRoomCollection;
 import com.github.minemaniauk.api.database.record.ArenaRecord;
 import com.github.minemaniauk.api.database.record.GameRoomRecord;
 import com.github.minemaniauk.api.indicator.Savable;
-import com.github.smuddgge.squishyconfiguration.interfaces.ConfigurationSection;
+import com.github.squishylib.configuration.ConfigurationSection;
 import com.google.gson.Gson;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

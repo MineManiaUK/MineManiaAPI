@@ -60,11 +60,24 @@
             <version>1.10.3</version>
         </dependency>
 
+        <!-- Configuration Library -->
+        <dependency>
+            <groupId>com.github.squishylib.SquishyLibrary</groupId>
+            <artifactId>configuration</artifactId>
+            <version>0.2.0</version>
+        </dependency>
+
         <!-- Database Library -->
         <dependency>
-            <groupId>com.github.smuddgge</groupId>
+            <groupId>com.github.Smuddgge</groupId>
             <artifactId>SquishyDatabase</artifactId>
-            <version>4.1.0</version>
+            <version>4.4.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.github.Smuddgge</groupId>
+                    <artifactId>SquishyConfiguration</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
